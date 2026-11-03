@@ -121,10 +121,10 @@
   // Renders a deep-dive "details" list in order: plain strings become
   // paragraphs, media objects ({ type: "image" | "video", src, ... }) become
   // figures, so text, screenshots, and clips can be interleaved freely.
-  function appendDetailEntries(container, entries, textClass, autoplayLoop) {
+  function appendDetailEntries(container, entries, textClass) {
     (entries || []).forEach(function (entry) {
       if (entry && typeof entry === "object") {
-        const figure = createGalleryItem(entry, autoplayLoop);
+        const figure = createGalleryItem(entry);
         figure.classList.add("media-item-between");
         container.append(figure);
       } else {
@@ -136,11 +136,8 @@
     });
   }
 
-  // One screenshot or clip in a deep-dive view, with its caption. Shared by
-  // the pop-over deep dive and the inline card details. With autoplayLoop,
-  // the clip plays muted and looping without controls (the inline style);
-  // otherwise it gets standard controls (the pop-over).
-  function createGalleryItem(item, autoplayLoop) {
+  // One screenshot or clip in the deep-dive gallery, with its caption.
+  function createGalleryItem(item) {
     const figure = document.createElement("figure");
     figure.className = item.type === "video" ? "media-item media-item-video" : "media-item";
 
@@ -148,12 +145,9 @@
       const video = document.createElement("video");
       video.className = "media-video";
       video.src = item.src;
-      video.controls = !autoplayLoop;
-      video.loop = Boolean(autoplayLoop);
-      video.muted = Boolean(autoplayLoop);
+      video.controls = true;
       video.setAttribute("playsinline", "");
-      // The clip only downloads when it is played (on open for the inline
-      // style, on play for the pop-over).
+      // The clip only downloads when the reader presses its play button.
       video.setAttribute("preload", "none");
       if (item.poster) {
         video.setAttribute("poster", item.poster);
@@ -175,139 +169,6 @@
     }
 
     return figure;
-  }
-
-  // Second presentation style: the whole card is the toggle. An invisible
-  // real button is stretched over each of the two views (see .card-hit-area
-  // in styles.css), so clicking anywhere on the card swaps between the base
-  // view and the details view - a real button keeps native keyboard and
-  // screen-reader support. The views live in one grid whose rows cross-morph
-  // in CSS; the details row sits on top, so they expand from the card's top
-  // edge. Clips in the details download and play (muted, looping) only when
-  // the card expands, and stop when it folds back.
-  function createInlineDetails(project, index) {
-    const toggleId = "project-details-toggle-" + index;
-    const drawerId = "project-drawer-" + index;
-    const titleId = "project-drawer-title-" + index;
-
-    function createHitArea(label) {
-      const hitArea = document.createElement("button");
-      hitArea.type = "button";
-      hitArea.className = "card-hit-area";
-      hitArea.setAttribute("aria-expanded", "false");
-      hitArea.setAttribute("aria-controls", drawerId);
-      hitArea.setAttribute("aria-label", label + ": " + project.title);
-      return hitArea;
-    }
-
-    const expandButton = createHitArea("Project details");
-    expandButton.id = toggleId;
-
-    const collapseButton = createHitArea("Hide details");
-
-    const drawer = document.createElement("div");
-    drawer.className = "card-drawer";
-    drawer.id = drawerId;
-    drawer.setAttribute("role", "region");
-    drawer.setAttribute("aria-labelledby", titleId);
-    drawer.tabIndex = -1; // Receives focus when the details open.
-
-    const inner = document.createElement("div");
-    inner.className = "card-drawer-inner";
-    drawer.append(collapseButton, inner);
-
-    const heading = document.createElement("p");
-    heading.className = "card-drawer-heading";
-    heading.textContent = "MORE ABOUT THIS PROJECT";
-    inner.append(heading);
-
-    const title = document.createElement("h3");
-    title.className = "card-drawer-title";
-    title.id = titleId;
-    title.textContent = project.title;
-    inner.append(title);
-
-    const tools = document.createElement("p");
-    tools.className = "card-drawer-tools";
-    tools.textContent = project.tools;
-    inner.append(tools);
-
-    // Clips play muted and looping, without controls, in the details view.
-    appendDetailEntries(inner, project.details, "card-drawer-text", true);
-
-    if (project.link) {
-      const footer = document.createElement("div");
-      footer.className = "card-drawer-footer";
-
-      const link = document.createElement("a");
-      link.className = "project-link";
-      link.href = project.link;
-      link.textContent = (project.linkLabel || "View project") + " ↗";
-      if (/^https?:\/\//i.test(project.link)) {
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-      }
-      footer.append(link);
-      inner.append(footer);
-    }
-
-    function setExpanded(opening) {
-      const views = drawer.closest(".card-views");
-      drawer.classList.toggle("is-open", opening);
-      if (views) {
-        views.classList.toggle("is-open", opening);
-      }
-      expandButton.setAttribute("aria-expanded", String(opening));
-      collapseButton.setAttribute("aria-expanded", String(opening));
-
-      if (opening) {
-        // A cover clip stops when the base card folds away.
-        const base = drawer.nextElementSibling;
-        if (base) {
-          base.querySelectorAll("video").forEach(function (video) {
-            video.pause();
-          });
-        }
-        // Clips in the details download now and play muted and looping.
-        drawer.querySelectorAll("video").forEach(function (video) {
-          video.play().catch(function () {});
-        });
-        // Focus without scrolling: the details start right where the reader
-        // clicked, so a focus-induced scroll would only jolt the page.
-        drawer.focus({ preventScroll: true });
-      } else {
-        // No clip keeps playing after the details are folded back.
-        drawer.querySelectorAll("video").forEach(function (video) {
-          video.pause();
-        });
-        // At this instant the base view still sits far below the details
-        // that are folding away, so a plain focus() would scroll the page
-        // down to that transient position - the reader would end up far
-        // below the card. Focus without scrolling, then bring the card back
-        // into view only if the reader had scrolled deep into the details.
-        expandButton.focus({ preventScroll: true });
-        const card = drawer.closest(".project-card");
-        if (card) {
-          card.scrollIntoView({ block: "nearest" });
-        }
-      }
-    }
-
-    expandButton.addEventListener("click", function () {
-      setExpanded(true);
-    });
-
-    collapseButton.addEventListener("click", function () {
-      setExpanded(false);
-    });
-
-    drawer.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && drawer.classList.contains("is-open")) {
-        setExpanded(false);
-      }
-    });
-
-    return { drawer: drawer, expandButton: expandButton };
   }
 
   function createProjectCard(project, index) {
@@ -387,7 +248,7 @@
       (project.details && project.details.length > 0) ||
       (project.media && project.media.length > 0);
 
-    if (hasDeepDive && project.deepDiveStyle !== "inline" && projectDialog) {
+    if (hasDeepDive && projectDialog) {
       const readMore = document.createElement("button");
       readMore.type = "button";
       readMore.className = "read-more-button";
@@ -411,27 +272,7 @@
     }
 
     info.append(meta, title, description, bottom);
-
-    if (hasDeepDive && project.deepDiveStyle === "inline") {
-      // The card swaps between two views: the details view and, below it,
-      // the base card (cover + info), cross-morphed by the .card-views grid
-      // in CSS. The details view is the top row, so it expands from the
-      // card's top edge. Both views are covered by an invisible toggle
-      // button, making the whole card clickable.
-      const inlineDetails = createInlineDetails(project, index);
-
-      const base = document.createElement("div");
-      base.className = "card-view-base";
-      base.append(inlineDetails.expandButton, cover, info);
-
-      const views = document.createElement("div");
-      views.className = "card-views";
-      views.append(inlineDetails.drawer, base);
-      article.append(views);
-    } else {
-      article.append(cover, info);
-    }
-
+    article.append(cover, info);
     return article;
   }
 

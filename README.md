@@ -58,17 +58,10 @@ An optional `media` list adds a gallery of further screenshots and clips
 after the text, same object shape as above. Leave `details` and `media` empty
 (`[]`) for a simple card with no deep-dive button.
 
-Choose how the deep dive is presented with `deepDiveStyle`:
-
-- `"dialog"` (default): a pop-over opens over the page, keeping the main
-  page untouched. Media only loads when someone opens it.
-- `"inline"`: the card folds away and is replaced by the details in place,
-  animated gradually from the card's top edge, so the reader never leaves
-  the project list. The whole card is clickable to expand and fold back,
-  and clips in the details play muted and looping once it expands. Cards in
-  the other column keep their own height while one is expanded.
-
-Guidelines for media files are in [media/README.md](./media/README.md).
+The deep dive opens in a pop-over over the page when the reader clicks
+"Read more" on the card. The main page stays untouched, and the deep-dive
+media only loads when someone opens it. Guidelines for media files are in
+[media/README.md](./media/README.md).
 
 ## Preview locally
 

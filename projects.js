@@ -7,8 +7,8 @@
 //          Muted and looped automatically; only downloads when someone clicks play.
 //          Use a 10-30 second MP4, a few MB max.
 //
-// Optional deep dive (extra text + more pictures and videos), shown when the
-// reader clicks "Read more" or "Project details" on the card:
+// Optional deep dive (extra text + more pictures and videos), shown in a pop-over
+// when the reader clicks "Read more" on the card:
 //   details: the content of the deep dive, in order. Each entry is either:
 //     - a string, shown as a paragraph, or
 //     - a media object, shown in place so pictures and clips sit between
@@ -17,14 +17,7 @@
 //       { type: "video", src: "media/clip-1.mp4", poster: "media/extra-1.jpg", caption: "Text under the clip" }
 //   media: more screenshots and clips shown as a gallery after the text,
 //     same objects as above, one per item.
-//   deepDiveStyle: how the deep dive is presented, one of:
-//     "dialog" (default) - opens a pop-over over the page.
-//     "inline" - the whole card is the toggle: click it to replace it with
-//               the details, click again to fold back. Clips in the details
-//               play muted and looping, and only download when the card
-//               expands.
-//   Leave details and media as empty lists ([]) for a simple card with no
-//   deep-dive button.
+//   Leave details and media as empty lists ([]) for a simple card with no "Read more".
 window.portfolioProjects = [
   {
     title: "Realtime Rendering Sandbox",
@@ -54,14 +47,13 @@ window.portfolioProjects = [
     image: "media/frank.png",
     video: "",
     details: [
-      "Sample inline details - replace these entries with the story of the project: what the player does, the mood you were aiming for, and the part you are most proud of.",
+      "Sample deep dive - replace these entries with the story of the project: what the player does, the mood you were aiming for, and the part you are most proud of.",
       { type: "image", src: "media/frank.png", caption: "Sample screenshot - replace with a capture of the environment." },
       "Text, pictures, and clips can be interleaved: this paragraph sits between the screenshot and the clip below.",
       { type: "video", src: "media/presentation.webm", poster: "media/frank.png", caption: "Sample clip - replace with a 10-30 second capture of the prototype." },
       "A closing paragraph keeps the reader anchored after the media."
     ],
     media: [],
-    deepDiveStyle: "inline",
     sample: true,
     link: "",
     linkLabel: ""
