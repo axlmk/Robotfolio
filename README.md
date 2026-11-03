@@ -40,26 +40,33 @@ fallback cover. Guidelines for sizes and formats are in
 ## Write a project deep dive
 
 A project can also have a deep dive: extra text and as many pictures and
-videos as you want, shown in a pop-over when the reader clicks "Read more"
-on the card. The main page stays untouched, and the deep-dive media only
-loads when someone opens it.
-
-In `projects.js`, fill in two optional fields:
-
-- `details`: an array of paragraphs, one string each. Keep paragraphs short;
-  lead with the most impressive fact.
-- `media`: an array of gallery items, one object each:
+videos as you want. In `projects.js`, fill in the optional `details` list.
+Each entry is either a string (shown as a paragraph) or a media object
+(shown in place, so pictures and clips sit between the paragraphs):
 
 ```js
-media: [
+details: [
+  "A paragraph about the project.",
   { type: "image", src: "media/extra-1.jpg", caption: "Text under the picture" },
+  "A paragraph between the picture and the clip.",
   { type: "video", src: "media/clip-1.mp4", poster: "media/extra-1.jpg", caption: "Text under the clip" }
-]
+],
+media: []
 ```
 
-Screenshots appear two per row (one per row on phones), clips take the full
-width with standard controls, so the reader can unmute if they want. Leave
-both fields empty (`[]`) for a simple card with no "Read more" button.
+An optional `media` list adds a gallery of further screenshots and clips
+after the text, same object shape as above. Leave `details` and `media` empty
+(`[]`) for a simple card with no deep-dive button.
+
+Choose how the deep dive is presented with `deepDiveStyle`:
+
+- `"dialog"` (default): a pop-over opens over the page, keeping the main
+  page untouched. Media only loads when someone opens it.
+- `"inline"`: the card folds away and is replaced by the details in place,
+  animated gradually, so the reader never leaves the project list. Cards in
+  the other column keep their own height while one is expanded.
+
+Guidelines for media files are in [media/README.md](./media/README.md).
 
 ## Preview locally
 

@@ -9,16 +9,20 @@
 //
 // Optional deep dive (extra text + more pictures and videos), shown when the
 // reader clicks "Read more" or "Project details" on the card:
-//   details: extra paragraphs about the project, one string per paragraph.
-//   media: more screenshots and clips for the deep dive, one object per item:
-//     { type: "image", src: "media/extra-1.jpg", caption: "Text under the picture" }
-//     { type: "video", src: "media/clip-1.mp4", poster: "media/extra-1.jpg", caption: "Text under the clip" }
-//   deepDiveStyle: how the extra content is presented, one of:
+//   details: the content of the deep dive, in order. Each entry is either:
+//     - a string, shown as a paragraph, or
+//     - a media object, shown in place so pictures and clips sit between
+//       the paragraphs:
+//       { type: "image", src: "media/extra-1.jpg", caption: "Text under the picture" }
+//       { type: "video", src: "media/clip-1.mp4", poster: "media/extra-1.jpg", caption: "Text under the clip" }
+//   media: more screenshots and clips shown as a gallery after the text,
+//     same objects as above, one per item.
+//   deepDiveStyle: how the deep dive is presented, one of:
 //     "dialog" (default) - opens a pop-over over the page.
-//     "inline" - expands inside the card itself, so the reader never leaves
-//               the project list. Good for quick skimming.
+//     "inline" - the card folds away and is replaced by the details in
+//               place, so the reader never leaves the project list.
 //   Leave details and media as empty lists ([]) for a simple card with no
-//   "Read more" button.
+//   deep-dive button.
 window.portfolioProjects = [
   {
     title: "Realtime Rendering Sandbox",
@@ -48,13 +52,13 @@ window.portfolioProjects = [
     image: "media/frank.png",
     video: "",
     details: [
-      "Sample inline details - replace these paragraphs with the story of the project: what the player does, the mood you were aiming for, and the part you are most proud of.",
-      "This deep dive expands inside the card instead of opening a pop-over, so readers can compare projects without losing their place in the list."
-    ],
-    media: [
+      "Sample inline details - replace these entries with the story of the project: what the player does, the mood you were aiming for, and the part you are most proud of.",
       { type: "image", src: "media/frank.png", caption: "Sample screenshot - replace with a capture of the environment." },
-      { type: "video", src: "media/presentation.webm", poster: "media/frank.png", caption: "Sample clip - replace with a 10-30 second capture of the prototype." }
+      "Text, pictures, and clips can be interleaved: this paragraph sits between the screenshot and the clip below.",
+      { type: "video", src: "media/presentation.webm", poster: "media/frank.png", caption: "Sample clip - replace with a 10-30 second capture of the prototype." },
+      "A closing paragraph keeps the reader anchored after the media."
     ],
+    media: [],
     deepDiveStyle: "inline",
     sample: true,
     link: "",

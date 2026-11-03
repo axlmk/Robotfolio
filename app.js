@@ -83,12 +83,7 @@
       content.append(hero);
     }
 
-    (project.details || []).forEach(function (paragraphText) {
-      const paragraph = document.createElement("p");
-      paragraph.className = "dialog-text";
-      paragraph.textContent = paragraphText;
-      content.append(paragraph);
-    });
+    appendDetailEntries(content, project.details, "dialog-text");
 
     if (project.media && project.media.length > 0) {
       const gallery = document.createElement("div");
@@ -121,6 +116,24 @@
 
     content.append(footer);
     projectDialog.showModal();
+  }
+
+  // Renders a deep-dive "details" list in order: plain strings become
+  // paragraphs, media objects ({ type: "image" | "video", src, ... }) become
+  // figures, so text, screenshots, and clips can be interleaved freely.
+  function appendDetailEntries(container, entries, textClass) {
+    (entries || []).forEach(function (entry) {
+      if (entry && typeof entry === "object") {
+        const figure = createGalleryItem(entry);
+        figure.classList.add("media-item-between");
+        container.append(figure);
+      } else {
+        const paragraph = document.createElement("p");
+        paragraph.className = textClass;
+        paragraph.textContent = entry;
+        container.append(paragraph);
+      }
+    });
   }
 
   // One screenshot or clip in a deep-dive gallery, with its caption. Shared by
@@ -159,13 +172,16 @@
     return figure;
   }
 
-  // Second presentation style: instead of a pop-over, a "Project details"
-  // toggle expands the extra text and media inside the card itself. The
-  // reader never leaves the project list, and screen readers follow the
-  // state through aria-expanded on the toggle.
-  function createInlineDetails(project, bottom, article, index) {
+  // Second presentation style: a "Project details" toggle swaps the base
+  // card for a details view in place. The two views live in one grid whose
+  // rows cross-morph in CSS (see .card-views in styles.css), so the base
+  // card folds away gradually while the details grow where it stood. Both
+  // toggles expose the state through aria-expanded, focus moves into the
+  // details on open and back to the toggle on close, and Escape closes too.
+  function createInlineDetails(project, bottom, index) {
     const toggleId = "project-details-toggle-" + index;
     const drawerId = "project-drawer-" + index;
+    const titleId = "project-drawer-title-" + index;
 
     const toggle = document.createElement("button");
     toggle.type = "button";
@@ -177,17 +193,15 @@
     const indicator = document.createElement("span");
     indicator.setAttribute("aria-hidden", "true");
     indicator.textContent = "+";
-
     toggle.append("Project details", indicator);
 
     const drawer = document.createElement("div");
     drawer.className = "card-drawer";
     drawer.id = drawerId;
     drawer.setAttribute("role", "region");
-    drawer.setAttribute("aria-labelledby", toggleId);
+    drawer.setAttribute("aria-labelledby", titleId);
+    drawer.tabIndex = -1; // Receives focus when the details open.
 
-    // Clipping wrapper: the drawer animates its grid row from 0fr to 1fr,
-    // and this element hides the content that does not fit yet.
     const inner = document.createElement("div");
     inner.className = "card-drawer-inner";
     drawer.append(inner);
@@ -197,42 +211,91 @@
     heading.textContent = "MORE ABOUT THIS PROJECT";
     inner.append(heading);
 
-    (project.details || []).forEach(function (paragraphText) {
-      const paragraph = document.createElement("p");
-      paragraph.className = "card-drawer-text";
-      paragraph.textContent = paragraphText;
-      inner.append(paragraph);
-    });
+    const title = document.createElement("h3");
+    title.className = "card-drawer-title";
+    title.id = titleId;
+    title.textContent = project.title;
+    inner.append(title);
 
-    if (project.media && project.media.length > 0) {
-      const gallery = document.createElement("div");
-      gallery.className = "media-gallery";
-      project.media.forEach(function (item) {
-        gallery.append(createGalleryItem(item));
-      });
-      inner.append(gallery);
+    const tools = document.createElement("p");
+    tools.className = "card-drawer-tools";
+    tools.textContent = project.tools;
+    inner.append(tools);
+
+    appendDetailEntries(inner, project.details, "card-drawer-text");
+
+    const footer = document.createElement("div");
+    footer.className = "card-drawer-footer";
+
+    if (project.link) {
+      const link = document.createElement("a");
+      link.className = "project-link";
+      link.href = project.link;
+      link.textContent = (project.linkLabel || "View project") + " ↗";
+      if (/^https?:\/\//i.test(project.link)) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      footer.append(link);
     }
 
-    toggle.addEventListener("click", function () {
-      const opening = !drawer.classList.contains("is-open");
+    const hideToggle = document.createElement("button");
+    hideToggle.type = "button";
+    hideToggle.className = "details-toggle";
+    hideToggle.setAttribute("aria-expanded", "false");
+    hideToggle.setAttribute("aria-controls", drawerId);
 
-      // The class drives the CSS height animation; visibility in the CSS
-      // keeps the folded content out of the tab order and screen readers.
+    const hideIndicator = document.createElement("span");
+    hideIndicator.setAttribute("aria-hidden", "true");
+    hideIndicator.textContent = "−";
+    hideToggle.append("Hide details", hideIndicator);
+    footer.append(hideToggle);
+
+    inner.append(footer);
+
+    function setExpanded(opening) {
+      const views = drawer.closest(".card-views");
       drawer.classList.toggle("is-open", opening);
+      if (views) {
+        views.classList.toggle("is-open", opening);
+      }
       toggle.setAttribute("aria-expanded", String(opening));
-      indicator.textContent = opening ? "−" : "+";
-      toggle.replaceChildren(opening ? "Hide details" : "Project details", indicator);
+      hideToggle.setAttribute("aria-expanded", String(opening));
 
-      if (!opening) {
+      if (opening) {
+        // A cover clip stops when the base card folds away.
+        const base = drawer.previousElementSibling;
+        if (base) {
+          base.querySelectorAll("video").forEach(function (video) {
+            video.pause();
+          });
+        }
+        drawer.focus();
+      } else {
         // No clip keeps playing after the details are folded back.
         drawer.querySelectorAll("video").forEach(function (video) {
           video.pause();
         });
+        toggle.focus();
+      }
+    }
+
+    toggle.addEventListener("click", function () {
+      setExpanded(!drawer.classList.contains("is-open"));
+    });
+
+    hideToggle.addEventListener("click", function () {
+      setExpanded(false);
+    });
+
+    drawer.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && drawer.classList.contains("is-open")) {
+        setExpanded(false);
       }
     });
 
     bottom.append(toggle);
-    article.append(drawer);
+    return drawer;
   }
 
   function createProjectCard(project, index) {
@@ -312,9 +375,7 @@
       (project.details && project.details.length > 0) ||
       (project.media && project.media.length > 0);
 
-    if (hasDeepDive && project.deepDiveStyle === "inline") {
-      createInlineDetails(project, bottom, article, index);
-    } else if (hasDeepDive && projectDialog) {
+    if (hasDeepDive && project.deepDiveStyle !== "inline" && projectDialog) {
       const readMore = document.createElement("button");
       readMore.type = "button";
       readMore.className = "read-more-button";
@@ -338,7 +399,23 @@
     }
 
     info.append(meta, title, description, bottom);
-    article.append(cover, info);
+
+    if (hasDeepDive && project.deepDiveStyle === "inline") {
+      // The card swaps between two views: the base card (cover + info) and
+      // the details view, cross-morphed by the .card-views grid in CSS.
+      const views = document.createElement("div");
+      views.className = "card-views";
+
+      const base = document.createElement("div");
+      base.className = "card-view-base";
+      base.append(cover, info);
+
+      views.append(base, createInlineDetails(project, bottom, index));
+      article.append(views);
+    } else {
+      article.append(cover, info);
+    }
+
     return article;
   }
 

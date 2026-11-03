@@ -367,6 +367,9 @@ h2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.15rem;
+  /* Cards keep their own height: opening one card must not stretch the
+     card next to it. */
+  align-items: start;
 }
 
 .project-card {
@@ -533,39 +536,53 @@ h2 {
   background: rgb(195 245 106 / 8%);
 }
 
-/* The drawer opens gradually: its grid row grows from 0fr to 1fr while the
-   inner wrapper clips whatever does not fit yet, so no height is measured in
-   JS. Visibility is delayed until after the fold so the collapsed content
-   stays out of the tab order and screen readers. */
-.card-drawer {
+/* Inline details: the card swaps between its base view and the details view.
+   Both views sit in one grid whose rows cross-morph from "1fr 0fr" (base
+   only) to "0fr 1fr" (details only), so the base card folds away gradually
+   while the details grow exactly where it stood - no popping, and no height
+   ever measured in JS. Each view clips its own content while its row
+   shrinks, and visibility swaps with a delay matching the 260ms motion to
+   keep the folded view out of the tab order and screen readers. */
+.card-views {
   display: grid;
-  grid-template-rows: 0fr;
-  padding: 0 1.35rem;
-  border-top: 0 solid var(--line);
-  background: var(--surface);
-  visibility: hidden;
-  transition:
-    grid-template-rows 260ms ease,
-    padding 260ms ease,
-    border-top-width 260ms ease,
-    visibility 0s linear 260ms;
+  grid-template-rows: 1fr 0fr;
+  transition: grid-template-rows 260ms ease;
 }
 
-.card-drawer.is-open {
-  grid-template-rows: 1fr;
-  padding: 1.25rem 1.35rem 1.5rem;
-  border-top-width: 1px;
+.card-views.is-open {
+  grid-template-rows: 0fr 1fr;
+}
+
+.card-view-base,
+.card-drawer {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.card-view-base {
   visibility: visible;
-  transition:
-    grid-template-rows 260ms ease,
-    padding 260ms ease,
-    border-top-width 260ms ease,
-    visibility 0s;
+  transition: visibility 0s;
+}
+
+.card-views.is-open .card-view-base {
+  visibility: hidden;
+  transition: visibility 0s linear 260ms;
+}
+
+.card-drawer {
+  visibility: hidden;
+  transition: visibility 0s linear 260ms;
+}
+
+.card-views.is-open .card-drawer {
+  visibility: visible;
+  transition: visibility 0s;
 }
 
 .card-drawer-inner {
-  min-height: 0;
-  overflow: hidden;
+  padding: 1.25rem 1.35rem 1.5rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
 }
 
 .card-drawer-heading {
@@ -582,8 +599,39 @@ h2 {
   font-size: 0.88rem;
 }
 
-.card-drawer .media-gallery {
-  margin-block: 1rem 0;
+/* A picture or clip placed between paragraphs of the details text. */
+.media-item-between {
+  margin-block: 0.9rem;
+}
+
+.card-drawer-title {
+  margin-bottom: 0.4rem;
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.card-drawer-tools {
+  margin-bottom: 1.2rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+}
+
+.card-drawer-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.card-drawer-footer .details-toggle {
+  margin-left: auto;
 }
 
 /* Project deep dive, opened in a native <dialog> over the page. */
