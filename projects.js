@@ -1,12 +1,19 @@
 // Add, edit, or remove projects in this list. Keep category as graphics, unreal, or unity.
 //
-// Media fields (both optional):
+// Media fields (all optional):
 //   image: screenshot shown directly on the project card, e.g. "media/my-project.jpg"
 //          Use a 16:9 JPG around 1200 pixels wide, compressed (a few hundred KB max).
 //   video: short clip the reader can play with a button on the card, e.g. "media/my-project.mp4"
 //          Muted and looped automatically; only downloads when someone clicks play.
 //          Use a 10-30 second MP4, a few MB max.
-//   Leave both empty ("") to show the generated fallback cover instead.
+//
+// Optional deep dive (extra text + more pictures and videos), shown in a pop-over
+// when the reader clicks "Read more" on the card:
+//   details: extra paragraphs about the project, one string per paragraph.
+//   media: more screenshots and clips for the deep dive, one object per item:
+//     { type: "image", src: "media/extra-1.jpg", caption: "Text under the picture" }
+//     { type: "video", src: "media/clip-1.mp4", poster: "media/extra-1.jpg", caption: "Text under the clip" }
+//   Leave details and media as empty lists ([]) for a simple card with no "Read more".
 window.portfolioProjects = [
   {
     title: "Realtime Rendering Sandbox",
@@ -17,6 +24,11 @@ window.portfolioProjects = [
     mark: "{ }",
     image: "",
     video: "",
+    details: [
+      "Sample deep dive - replace these paragraphs with the story of the project: the problem you set out to solve, the parts you are proud of, and what you learned building it.",
+      "Keep each paragraph short (2 to 4 sentences). Recruiters skim: lead with the most impressive fact, then the interesting technical detail."
+    ],
+    media: [],
     sample: true,
     link: "",
     linkLabel: ""
@@ -30,6 +42,8 @@ window.portfolioProjects = [
     mark: "UE",
     image: "",
     video: "",
+    details: [],
+    media: [],
     sample: true,
     link: "",
     linkLabel: ""
@@ -43,6 +57,8 @@ window.portfolioProjects = [
     mark: "01",
     image: "",
     video: "",
+    details: [],
+    media: [],
     sample: true,
     link: "",
     linkLabel: ""
@@ -56,6 +72,8 @@ window.portfolioProjects = [
     mark: "∿",
     image: "",
     video: "",
+    details: [],
+    media: [],
     sample: true,
     link: "",
     linkLabel: ""

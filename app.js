@@ -1,6 +1,7 @@
 (function () {
   const projectGrid = document.querySelector("#project-grid");
   const filterButtons = document.querySelectorAll("[data-filter]");
+  const projectDialog = document.querySelector("#project-dialog");
   const projects = window.portfolioProjects;
 
   if (!projectGrid || !Array.isArray(projects)) {
@@ -51,6 +52,110 @@
     });
 
     cover.append(video, playButton);
+  }
+
+  // Fills the shared <dialog> with the deep dive for one project and opens it.
+  // A project has a deep dive when it has details paragraphs or gallery media.
+  function openProjectDialog(project) {
+    const content = document.querySelector("#project-dialog-content");
+    content.replaceChildren();
+
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "eyebrow";
+    eyebrow.textContent = "PROJECT DEEP DIVE";
+    content.append(eyebrow);
+
+    const title = document.createElement("h3");
+    title.id = "project-dialog-title";
+    title.textContent = project.title;
+    content.append(title);
+
+    const tools = document.createElement("p");
+    tools.className = "dialog-tools";
+    tools.textContent = project.tools;
+    content.append(tools);
+
+    if (project.image) {
+      const hero = document.createElement("img");
+      hero.className = "dialog-hero";
+      hero.src = project.image;
+      hero.alt = "Main screenshot: " + project.title;
+      content.append(hero);
+    }
+
+    (project.details || []).forEach(function (paragraphText) {
+      const paragraph = document.createElement("p");
+      paragraph.className = "dialog-text";
+      paragraph.textContent = paragraphText;
+      content.append(paragraph);
+    });
+
+    if (project.media && project.media.length > 0) {
+      const gallery = document.createElement("div");
+      gallery.className = "dialog-gallery";
+      project.media.forEach(function (item) {
+        gallery.append(createGalleryItem(item));
+      });
+      content.append(gallery);
+    }
+
+    const footer = document.createElement("div");
+    footer.className = "dialog-footer";
+
+    if (project.link) {
+      const link = document.createElement("a");
+      link.className = "project-link";
+      link.href = project.link;
+      link.textContent = (project.linkLabel || "View project") + " ↗";
+      if (/^https?:\/\//i.test(project.link)) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      footer.append(link);
+    }
+
+    const hint = document.createElement("p");
+    hint.className = "dialog-hint";
+    hint.textContent = "Press Escape or click outside to close.";
+    footer.append(hint);
+
+    content.append(footer);
+    projectDialog.showModal();
+  }
+
+  // One screenshot or clip in the deep-dive gallery, with its caption.
+  function createGalleryItem(item) {
+    const figure = document.createElement("figure");
+    figure.className = item.type === "video" ? "dialog-item dialog-item-video" : "dialog-item";
+
+    if (item.type === "video") {
+      const video = document.createElement("video");
+      video.className = "dialog-video";
+      video.src = item.src;
+      video.controls = true;
+      video.setAttribute("playsinline", "");
+      // The clip only downloads when the reader presses its play button.
+      video.setAttribute("preload", "none");
+      if (item.poster) {
+        video.setAttribute("poster", item.poster);
+      }
+      figure.append(video);
+    } else {
+      const image = document.createElement("img");
+      image.className = "dialog-image";
+      image.src = item.src;
+      image.alt = item.caption || "Project screenshot";
+      image.loading = "lazy";
+      figure.append(image);
+    }
+
+    if (item.caption) {
+      const caption = document.createElement("figcaption");
+      caption.textContent = item.caption;
+      figure.append(caption);
+    }
+
+    return figure;
   }
 
   function createProjectCard(project, index) {
@@ -126,6 +231,21 @@
     tools.textContent = project.tools;
     bottom.append(tools);
 
+    const hasDeepDive =
+      (project.details && project.details.length > 0) ||
+      (project.media && project.media.length > 0);
+
+    if (hasDeepDive && projectDialog) {
+      const readMore = document.createElement("button");
+      readMore.type = "button";
+      readMore.className = "read-more-button";
+      readMore.textContent = "Read more";
+      readMore.addEventListener("click", function () {
+        openProjectDialog(project);
+      });
+      bottom.append(readMore);
+    }
+
     if (project.link) {
       const link = document.createElement("a");
       link.className = "project-link";
@@ -176,6 +296,26 @@
       renderProjects(selectedFilter);
     });
   });
+
+  if (projectDialog) {
+    document.querySelector("#dialog-close").addEventListener("click", function () {
+      projectDialog.close();
+    });
+
+    // Clicking the dark area around the deep dive closes it.
+    projectDialog.addEventListener("click", function (event) {
+      if (event.target === projectDialog) {
+        projectDialog.close();
+      }
+    });
+
+    // No clip keeps playing (or sounding) after the deep dive closes.
+    projectDialog.addEventListener("close", function () {
+      projectDialog.querySelectorAll("video").forEach(function (video) {
+        video.pause();
+      });
+    });
+  }
 
   renderProjects("all");
 })();

@@ -497,6 +497,151 @@ h2 {
   color: var(--background);
 }
 
+/* "Read more" button on a project card. */
+.read-more-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.read-more-button:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Project deep dive, opened in a native <dialog> over the page. */
+body:has(.project-dialog[open]) {
+  overflow: hidden;
+}
+
+.project-dialog {
+  width: min(880px, calc(100% - 2rem));
+  max-height: calc(100% - 3rem);
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--background);
+  color: var(--text);
+  overflow: auto;
+}
+
+.project-dialog::backdrop {
+  background: rgb(6 8 7 / 80%);
+}
+
+.dialog-inner {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.dialog-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--background);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dialog-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.project-dialog .eyebrow {
+  margin-bottom: 1rem;
+}
+
+.project-dialog h3 {
+  margin-bottom: 0.3rem;
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.dialog-tools {
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+}
+
+.dialog-hero {
+  display: block;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--line);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.dialog-text {
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.dialog-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem 2rem;
+}
+
+.dialog-item {
+  margin: 0;
+}
+
+/* Clips are wider than screenshots: they take the full gallery row. */
+.dialog-item-video {
+  grid-column: 1 / -1;
+}
+
+.dialog-image,
+.dialog-video {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+}
+
+.dialog-image {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.dialog-item figcaption {
+  padding-top: 0.5rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+}
+
+.dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.dialog-hint {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+}
+
 .project-info {
   display: flex;
   flex: 1;
@@ -833,6 +978,10 @@ h2 {
   }
 
   .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dialog-gallery {
     grid-template-columns: 1fr;
   }
 

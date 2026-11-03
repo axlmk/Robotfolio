@@ -24,7 +24,7 @@ entries are replaced. No project artwork or personal details are fabricated.
 
 ## Show screenshots and videos
 
-Each project in `projects.js` accepts two optional media fields:
+Each project in `projects.js` accepts optional media fields:
 
 - `image`: a screenshot shown directly on the project card. This is the
   recruiter-facing visual: it loads with the page and costs no extra clicks.
@@ -36,6 +36,30 @@ Put the files in `media/` and reference them like
 `image: "media/my-project.jpg"`. Projects without media keep the generated
 fallback cover. Guidelines for sizes and formats are in
 [media/README.md](./media/README.md).
+
+## Write a project deep dive
+
+A project can also have a deep dive: extra text and as many pictures and
+videos as you want, shown in a pop-over when the reader clicks "Read more"
+on the card. The main page stays untouched, and the deep-dive media only
+loads when someone opens it.
+
+In `projects.js`, fill in two optional fields:
+
+- `details`: an array of paragraphs, one string each. Keep paragraphs short;
+  lead with the most impressive fact.
+- `media`: an array of gallery items, one object each:
+
+```js
+media: [
+  { type: "image", src: "media/extra-1.jpg", caption: "Text under the picture" },
+  { type: "video", src: "media/clip-1.mp4", poster: "media/extra-1.jpg", caption: "Text under the clip" }
+]
+```
+
+Screenshots appear two per row (one per row on phones), clips take the full
+width with standard controls, so the reader can unmute if they want. Leave
+both fields empty (`[]`) for a simple card with no "Read more" button.
 
 ## Preview locally
 

@@ -147,6 +147,17 @@
       </section>
     </main>
 
+    <!--
+      Project deep dive: opened by the "Read more" button on a project card.
+      The content inside is filled by app.js from the project's entry in projects.js.
+    -->
+    <dialog class="project-dialog" id="project-dialog">
+      <div class="dialog-inner">
+        <button class="dialog-close" id="dialog-close" type="button">Close</button>
+        <div id="project-dialog-content"></div>
+      </div>
+    </dialog>
+
     <footer class="site-footer page-width">
       <a class="wordmark" href="#top" aria-label="Back to top">DEV<span>.</span></a>
       <p>Designed for the work, built to load fast.</p>
