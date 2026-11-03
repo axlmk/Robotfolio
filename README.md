@@ -63,7 +63,9 @@ Choose how the deep dive is presented with `deepDiveStyle`:
 - `"dialog"` (default): a pop-over opens over the page, keeping the main
   page untouched. Media only loads when someone opens it.
 - `"inline"`: the card folds away and is replaced by the details in place,
-  animated gradually, so the reader never leaves the project list. Cards in
+  animated gradually from the card's top edge, so the reader never leaves
+  the project list. The whole card is clickable to expand and fold back,
+  and clips in the details play muted and looping once it expands. Cards in
   the other column keep their own height while one is expanded.
 
 Guidelines for media files are in [media/README.md](./media/README.md).

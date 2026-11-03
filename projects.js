@@ -19,8 +19,10 @@
 //     same objects as above, one per item.
 //   deepDiveStyle: how the deep dive is presented, one of:
 //     "dialog" (default) - opens a pop-over over the page.
-//     "inline" - the card folds away and is replaced by the details in
-//               place, so the reader never leaves the project list.
+//     "inline" - the whole card is the toggle: click it to replace it with
+//               the details, click again to fold back. Clips in the details
+//               play muted and looping, and only download when the card
+//               expands.
 //   Leave details and media as empty lists ([]) for a simple card with no
 //   deep-dive button.
 window.portfolioProjects = [

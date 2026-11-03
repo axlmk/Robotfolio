@@ -515,46 +515,48 @@ h2 {
   text-underline-offset: 4px;
 }
 
-/* "Project details" toggle: expands the extra text and media inside the card
-   instead of opening the pop-over. The plus/minus sign mirrors aria-expanded
-   for readers who don't use assistive tech. */
-.details-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.6rem;
-  border: 1px solid rgb(195 245 106 / 35%);
-  background: transparent;
-  color: var(--accent);
+/* Whole-card toggle for the inline details: an invisible real button is
+   stretched over each view, so clicking anywhere on the card expands or
+   folds it. It is a genuine <button>, so keyboard and screen-reader
+   support come for free; interactive elements on top of it (the card
+   video play button, project links) stay clickable because they are
+   positioned and come later in the DOM. */
+.card-hit-area {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: transparent;
   cursor: pointer;
-  font-size: 0.78rem;
-  transition: background 160ms ease;
 }
 
-.details-toggle:hover,
-.details-toggle[aria-expanded="true"] {
-  background: rgb(195 245 106 / 8%);
+.card-hit-area:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
-/* Inline details: the card swaps between its base view and the details view.
-   Both views sit in one grid whose rows cross-morph from "1fr 0fr" (base
-   only) to "0fr 1fr" (details only), so the base card folds away gradually
-   while the details grow exactly where it stood - no popping, and no height
-   ever measured in JS. Each view clips its own content while its row
-   shrinks, and visibility swaps with a delay matching the 260ms motion to
-   keep the folded view out of the tab order and screen readers. */
+/* Inline details: the card swaps between its details view and its base view.
+   The details view is the top row, so it expands from the card's top edge
+   while the base folds away below it; the rows cross-morph between "0fr 1fr"
+   (base only) and "1fr 0fr" (details only) - no popping, and no height ever
+   measured in JS. Each view clips its own content while its row shrinks, and
+   visibility swaps with a delay matching the 260ms motion to keep the folded
+   view out of the tab order and screen readers. */
 .card-views {
   display: grid;
-  grid-template-rows: 1fr 0fr;
+  grid-template-rows: 0fr 1fr;
   transition: grid-template-rows 260ms ease;
 }
 
 .card-views.is-open {
-  grid-template-rows: 0fr 1fr;
+  grid-template-rows: 1fr 0fr;
 }
 
 .card-view-base,
 .card-drawer {
+  position: relative;
   min-height: 0;
   overflow: hidden;
 }
@@ -581,7 +583,6 @@ h2 {
 
 .card-drawer-inner {
   padding: 1.25rem 1.35rem 1.5rem;
-  border-top: 1px solid var(--line);
   background: var(--surface);
 }
 
@@ -623,15 +624,11 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 0.5rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
-}
-
-.card-drawer-footer .details-toggle {
-  margin-left: auto;
 }
 
 /* Project deep dive, opened in a native <dialog> over the page. */
@@ -823,6 +820,10 @@ body:has(.project-dialog[open]) {
 }
 
 .project-link {
+  /* Positioned and layered so the link stays clickable above the whole-card
+     hit area of an inline card. */
+  position: relative;
+  z-index: 2;
   color: var(--accent);
   font-size: 0.8rem;
 }
