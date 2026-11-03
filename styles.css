@@ -301,24 +301,6 @@ h1 span {
   color: var(--accent);
 }
 
-.hero-footer {
-  position: absolute;
-  right: 0;
-  bottom: 1.5rem;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.1em;
-}
-
-.hero-footer .status-dot {
-  margin-left: 0.35rem;
-  vertical-align: middle;
-}
-
 .section-pad {
   padding-block: 7rem;
 }
@@ -749,10 +731,6 @@ h2 {
     justify-self: center;
   }
 
-  .hero-footer {
-    bottom: 1.5rem;
-  }
-
   .section-pad {
     padding-block: 5rem;
   }
@@ -802,10 +780,6 @@ h2 {
 
   h1 {
     font-size: clamp(3.35rem, 15vw, 4.8rem);
-  }
-
-  .hero-footer {
-    font-size: 0.55rem;
   }
 
   .project-grid {
