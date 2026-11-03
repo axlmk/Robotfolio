@@ -533,10 +533,39 @@ h2 {
   background: rgb(195 245 106 / 8%);
 }
 
+/* The drawer opens gradually: its grid row grows from 0fr to 1fr while the
+   inner wrapper clips whatever does not fit yet, so no height is measured in
+   JS. Visibility is delayed until after the fold so the collapsed content
+   stays out of the tab order and screen readers. */
 .card-drawer {
-  padding: 1.25rem 1.35rem 1.5rem;
-  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-rows: 0fr;
+  padding: 0 1.35rem;
+  border-top: 0 solid var(--line);
   background: var(--surface);
+  visibility: hidden;
+  transition:
+    grid-template-rows 260ms ease,
+    padding 260ms ease,
+    border-top-width 260ms ease,
+    visibility 0s linear 260ms;
+}
+
+.card-drawer.is-open {
+  grid-template-rows: 1fr;
+  padding: 1.25rem 1.35rem 1.5rem;
+  border-top-width: 1px;
+  visibility: visible;
+  transition:
+    grid-template-rows 260ms ease,
+    padding 260ms ease,
+    border-top-width 260ms ease,
+    visibility 0s;
+}
+
+.card-drawer-inner {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .card-drawer-heading {

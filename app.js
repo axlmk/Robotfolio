@@ -185,18 +185,23 @@
     drawer.id = drawerId;
     drawer.setAttribute("role", "region");
     drawer.setAttribute("aria-labelledby", toggleId);
-    drawer.hidden = true;
+
+    // Clipping wrapper: the drawer animates its grid row from 0fr to 1fr,
+    // and this element hides the content that does not fit yet.
+    const inner = document.createElement("div");
+    inner.className = "card-drawer-inner";
+    drawer.append(inner);
 
     const heading = document.createElement("p");
     heading.className = "card-drawer-heading";
     heading.textContent = "MORE ABOUT THIS PROJECT";
-    drawer.append(heading);
+    inner.append(heading);
 
     (project.details || []).forEach(function (paragraphText) {
       const paragraph = document.createElement("p");
       paragraph.className = "card-drawer-text";
       paragraph.textContent = paragraphText;
-      drawer.append(paragraph);
+      inner.append(paragraph);
     });
 
     if (project.media && project.media.length > 0) {
@@ -205,12 +210,15 @@
       project.media.forEach(function (item) {
         gallery.append(createGalleryItem(item));
       });
-      drawer.append(gallery);
+      inner.append(gallery);
     }
 
     toggle.addEventListener("click", function () {
-      const opening = drawer.hidden;
-      drawer.hidden = !opening;
+      const opening = !drawer.classList.contains("is-open");
+
+      // The class drives the CSS height animation; visibility in the CSS
+      // keeps the folded content out of the tab order and screen readers.
+      drawer.classList.toggle("is-open", opening);
       toggle.setAttribute("aria-expanded", String(opening));
       indicator.textContent = opening ? "−" : "+";
       toggle.replaceChildren(opening ? "Hide details" : "Project details", indicator);
