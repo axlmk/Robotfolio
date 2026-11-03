@@ -512,6 +512,51 @@ h2 {
   text-underline-offset: 4px;
 }
 
+/* "Project details" toggle: expands the extra text and media inside the card
+   instead of opening the pop-over. The plus/minus sign mirrors aria-expanded
+   for readers who don't use assistive tech. */
+.details-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid rgb(195 245 106 / 35%);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: background 160ms ease;
+}
+
+.details-toggle:hover,
+.details-toggle[aria-expanded="true"] {
+  background: rgb(195 245 106 / 8%);
+}
+
+.card-drawer {
+  padding: 1.25rem 1.35rem 1.5rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.card-drawer-heading {
+  margin-bottom: 0.9rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.13em;
+}
+
+.card-drawer-text {
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.card-drawer .media-gallery {
+  margin-block: 1rem 0;
+}
+
 /* Project deep dive, opened in a native <dialog> over the page. */
 body:has(.project-dialog[open]) {
   overflow: hidden;
@@ -591,35 +636,36 @@ body:has(.project-dialog[open]) {
   font-size: 0.95rem;
 }
 
-.dialog-gallery {
+/* Media gallery shared by the pop-over deep dive and the inline card details. */
+.media-gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-block: 1.5rem 2rem;
 }
 
-.dialog-item {
+.media-item {
   margin: 0;
 }
 
 /* Clips are wider than screenshots: they take the full gallery row. */
-.dialog-item-video {
+.media-item-video {
   grid-column: 1 / -1;
 }
 
-.dialog-image,
-.dialog-video {
+.media-image,
+.media-video {
   display: block;
   width: 100%;
   border: 1px solid var(--line);
 }
 
-.dialog-image {
+.media-image {
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
-.dialog-item figcaption {
+.media-item figcaption {
   padding-top: 0.5rem;
   color: var(--muted);
   font-family: var(--mono);
@@ -981,7 +1027,7 @@ body:has(.project-dialog[open]) {
     grid-template-columns: 1fr;
   }
 
-  .dialog-gallery {
+  .media-gallery {
     grid-template-columns: 1fr;
   }
 

@@ -148,8 +148,10 @@
     </main>
 
     <!--
-      Project deep dive: opened by the "Read more" button on a project card.
-      The content inside is filled by app.js from the project's entry in projects.js.
+      Project deep dive, pop-over style: opened by the "Read more" button on
+      cards whose deepDiveStyle is "dialog" (the default). The content inside
+      is filled by app.js from the project's entry in projects.js. Projects
+      with deepDiveStyle "inline" expand inside their card instead.
     -->
     <dialog class="project-dialog" id="project-dialog">
       <div class="dialog-inner">

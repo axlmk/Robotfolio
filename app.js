@@ -92,7 +92,7 @@
 
     if (project.media && project.media.length > 0) {
       const gallery = document.createElement("div");
-      gallery.className = "dialog-gallery";
+      gallery.className = "media-gallery";
       project.media.forEach(function (item) {
         gallery.append(createGalleryItem(item));
       });
@@ -123,14 +123,15 @@
     projectDialog.showModal();
   }
 
-  // One screenshot or clip in the deep-dive gallery, with its caption.
+  // One screenshot or clip in a deep-dive gallery, with its caption. Shared by
+  // the pop-over deep dive and the inline card details.
   function createGalleryItem(item) {
     const figure = document.createElement("figure");
-    figure.className = item.type === "video" ? "dialog-item dialog-item-video" : "dialog-item";
+    figure.className = item.type === "video" ? "media-item media-item-video" : "media-item";
 
     if (item.type === "video") {
       const video = document.createElement("video");
-      video.className = "dialog-video";
+      video.className = "media-video";
       video.src = item.src;
       video.controls = true;
       video.setAttribute("playsinline", "");
@@ -142,7 +143,7 @@
       figure.append(video);
     } else {
       const image = document.createElement("img");
-      image.className = "dialog-image";
+      image.className = "media-image";
       image.src = item.src;
       image.alt = item.caption || "Project screenshot";
       image.loading = "lazy";
@@ -156,6 +157,74 @@
     }
 
     return figure;
+  }
+
+  // Second presentation style: instead of a pop-over, a "Project details"
+  // toggle expands the extra text and media inside the card itself. The
+  // reader never leaves the project list, and screen readers follow the
+  // state through aria-expanded on the toggle.
+  function createInlineDetails(project, bottom, article, index) {
+    const toggleId = "project-details-toggle-" + index;
+    const drawerId = "project-drawer-" + index;
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "details-toggle";
+    toggle.id = toggleId;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", drawerId);
+
+    const indicator = document.createElement("span");
+    indicator.setAttribute("aria-hidden", "true");
+    indicator.textContent = "+";
+
+    toggle.append("Project details", indicator);
+
+    const drawer = document.createElement("div");
+    drawer.className = "card-drawer";
+    drawer.id = drawerId;
+    drawer.setAttribute("role", "region");
+    drawer.setAttribute("aria-labelledby", toggleId);
+    drawer.hidden = true;
+
+    const heading = document.createElement("p");
+    heading.className = "card-drawer-heading";
+    heading.textContent = "MORE ABOUT THIS PROJECT";
+    drawer.append(heading);
+
+    (project.details || []).forEach(function (paragraphText) {
+      const paragraph = document.createElement("p");
+      paragraph.className = "card-drawer-text";
+      paragraph.textContent = paragraphText;
+      drawer.append(paragraph);
+    });
+
+    if (project.media && project.media.length > 0) {
+      const gallery = document.createElement("div");
+      gallery.className = "media-gallery";
+      project.media.forEach(function (item) {
+        gallery.append(createGalleryItem(item));
+      });
+      drawer.append(gallery);
+    }
+
+    toggle.addEventListener("click", function () {
+      const opening = drawer.hidden;
+      drawer.hidden = !opening;
+      toggle.setAttribute("aria-expanded", String(opening));
+      indicator.textContent = opening ? "−" : "+";
+      toggle.replaceChildren(opening ? "Hide details" : "Project details", indicator);
+
+      if (!opening) {
+        // No clip keeps playing after the details are folded back.
+        drawer.querySelectorAll("video").forEach(function (video) {
+          video.pause();
+        });
+      }
+    });
+
+    bottom.append(toggle);
+    article.append(drawer);
   }
 
   function createProjectCard(project, index) {
@@ -235,7 +304,9 @@
       (project.details && project.details.length > 0) ||
       (project.media && project.media.length > 0);
 
-    if (hasDeepDive && projectDialog) {
+    if (hasDeepDive && project.deepDiveStyle === "inline") {
+      createInlineDetails(project, bottom, article, index);
+    } else if (hasDeepDive && projectDialog) {
       const readMore = document.createElement("button");
       readMore.type = "button";
       readMore.className = "read-more-button";
