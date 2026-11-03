@@ -272,13 +272,24 @@
         drawer.querySelectorAll("video").forEach(function (video) {
           video.play().catch(function () {});
         });
-        drawer.focus();
+        // Focus without scrolling: the details start right where the reader
+        // clicked, so a focus-induced scroll would only jolt the page.
+        drawer.focus({ preventScroll: true });
       } else {
         // No clip keeps playing after the details are folded back.
         drawer.querySelectorAll("video").forEach(function (video) {
           video.pause();
         });
-        expandButton.focus();
+        // At this instant the base view still sits far below the details
+        // that are folding away, so a plain focus() would scroll the page
+        // down to that transient position - the reader would end up far
+        // below the card. Focus without scrolling, then bring the card back
+        // into view only if the reader had scrolled deep into the details.
+        expandButton.focus({ preventScroll: true });
+        const card = drawer.closest(".project-card");
+        if (card) {
+          card.scrollIntoView({ block: "nearest" });
+        }
       }
     }
 
