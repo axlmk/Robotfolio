@@ -55,7 +55,7 @@ window.portfolioProjects = [
     ],
     media: [],
     sample: true,
-    link: "",
+    link: "github.com",
     linkLabel: ""
   },
   {

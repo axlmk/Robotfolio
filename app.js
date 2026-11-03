@@ -41,7 +41,7 @@
 
       if (playing) {
         // Browsers can refuse playback; a failed play leaves the screenshot visible.
-        video.play().catch(function () {});
+        video.play().catch(function () { });
       } else {
         video.pause();
       }
@@ -59,11 +59,6 @@
   function openProjectDialog(project) {
     const content = document.querySelector("#project-dialog-content");
     content.replaceChildren();
-
-    const eyebrow = document.createElement("p");
-    eyebrow.className = "eyebrow";
-    eyebrow.textContent = "PROJECT DEEP DIVE";
-    content.append(eyebrow);
 
     const title = document.createElement("h3");
     title.id = "project-dialog-title";
@@ -108,11 +103,6 @@
       }
       footer.append(link);
     }
-
-    const hint = document.createElement("p");
-    hint.className = "dialog-hint";
-    hint.textContent = "Press Escape or click outside to close.";
-    footer.append(hint);
 
     content.append(footer);
     projectDialog.showModal();
