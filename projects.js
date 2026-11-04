@@ -38,19 +38,19 @@ window.portfolioProjects = [
     linkLabel: ""
   },
   {
-    title: "Exploration Prototype",
+    title: "Frank",
     category: "unreal",
     categoryLabel: "Unreal Engine",
     description: "A third-person environment prototype focused on atmosphere, responsive movement, and world-building.",
     tools: "Unreal Engine · C++",
     mark: "UE",
-    image: "media/frank.png",
+    image: "media/frank-main.png",
     video: "",
     details: [
       "Sample deep dive - replace these entries with the story of the project: what the player does, the mood you were aiming for, and the part you are most proud of.",
-      { type: "image", src: "media/frank.png", caption: "Sample screenshot - replace with a capture of the environment." },
+      { type: "image", src: "media/frank-3.png", caption: "Sample screenshot - replace with a capture of the environment." },
       "Text, pictures, and clips can be interleaved: this paragraph sits between the screenshot and the clip below.",
-      { type: "video", src: "media/presentation.webm", poster: "media/frank.png", caption: "Sample clip - replace with a 10-30 second capture of the prototype." },
+      { type: "video", src: "media/frank-2.webm", poster: "media/frank.png", caption: "Sample clip - replace with a 10-30 second capture of the prototype." },
       "A closing paragraph keeps the reader anchored after the media.",
       "A closing paragraph keeps the reader anchored after the media.",
       "A closing paragraph keeps the reader anchored after the media.",

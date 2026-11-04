@@ -17,41 +17,9 @@
     video.src = project.video;
     video.muted = true;
     video.loop = true;
+    video.autoplay = true;
     video.setAttribute("playsinline", "");
     video.setAttribute("preload", "none");
-    if (project.image) {
-      video.setAttribute("poster", project.image);
-    }
-
-    const playButton = document.createElement("button");
-    playButton.type = "button";
-    playButton.className = "cover-play";
-    playButton.textContent = "Play video";
-    playButton.setAttribute("aria-pressed", "false");
-    playButton.setAttribute("aria-label", "Play video preview of " + project.title);
-
-    function setPlaying(playing) {
-      cover.classList.toggle("is-playing", playing);
-      playButton.textContent = playing ? "Stop video" : "Play video";
-      playButton.setAttribute("aria-pressed", String(playing));
-      playButton.setAttribute(
-        "aria-label",
-        (playing ? "Stop video preview of " : "Play video preview of ") + project.title
-      );
-
-      if (playing) {
-        // Browsers can refuse playback; a failed play leaves the screenshot visible.
-        video.play().catch(function () { });
-      } else {
-        video.pause();
-      }
-    }
-
-    playButton.addEventListener("click", function () {
-      setPlaying(!cover.classList.contains("is-playing"));
-    });
-
-    cover.append(video, playButton);
   }
 
   // Fills the shared <dialog> with the deep dive for one project and opens it.
@@ -132,13 +100,12 @@
       const video = document.createElement("video");
       video.className = "media-video";
       video.src = item.src;
-      video.controls = true;
+      video.controls = false;
       video.setAttribute("playsinline", "");
-      // The clip only downloads when the reader presses its play button.
-      video.setAttribute("preload", "none");
-      if (item.poster) {
-        video.setAttribute("poster", item.poster);
-      }
+      video.setAttribute("preload", "auto");
+      video.autoplay = true;
+      video.loop = true;
+
       figure.append(video);
     } else {
       const image = document.createElement("img");
