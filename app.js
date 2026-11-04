@@ -234,7 +234,7 @@
     if (hasDeepDive && projectDialog) {
       const readMore = document.createElement("button");
       readMore.type = "button";
-      readMore.className = "read-more-button";
+      readMore.className = "button button-secondary button-compact";
       readMore.textContent = "Read more";
       readMore.addEventListener("click", function () {
         openProjectDialog(project);
