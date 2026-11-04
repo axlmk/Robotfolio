@@ -10,6 +10,7 @@
   --mono: "Courier New", monospace;
   --body: "Segoe UI", Arial, sans-serif;
   --display: "Trebuchet MS", Arial, sans-serif;
+  --margin-dialog: 3vw;
 }
 
 * {
@@ -110,14 +111,12 @@ a:focus-visible {
   color: var(--accent);
 }
 
-.header-link,
-.text-link {
+.header-link {
   color: var(--accent);
   font-size: 0.88rem;
 }
 
 .header-link span,
-.text-link span,
 .contact-links span {
   margin-left: 0.35rem;
 }
@@ -402,7 +401,7 @@ body:has(.project-dialog[open]) {
 
 .project-dialog {
   width: min(880px, calc(100% - 2rem));
-  max-height: calc(100% - 3rem);
+  max-height: calc(100vh - (var(--margin-dialog)) * 2);
   padding: 0;
   border: 1px solid var(--line);
   background: var(--background);
@@ -459,13 +458,13 @@ body:has(.project-dialog[open]) {
   font-size: 0.66rem;
 }
 
-.dialog-hero {
-  display: block;
-  width: 100%;
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--line);
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+/* Title row of the deep dive: the project name with its link beside it. */
+.dialog-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
 }
 
 .dialog-text {
@@ -508,22 +507,6 @@ body:has(.project-dialog[open]) {
   color: var(--muted);
   font-family: var(--mono);
   font-size: 0.64rem;
-}
-
-.dialog-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-}
-
-.dialog-hint {
-  margin: 0;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.62rem;
 }
 
 .project-info {
@@ -604,7 +587,6 @@ body:has(.project-dialog[open]) {
   color: var(--accent);
 }
 
-.about-layout,
 .resume-layout {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
@@ -620,11 +602,6 @@ body:has(.project-dialog[open]) {
 
 .about-copy p {
   margin-bottom: 1.2rem;
-}
-
-.about-copy .text-link {
-  display: inline-block;
-  margin-top: 0.5rem;
 }
 
 .resume-section {
@@ -716,10 +693,6 @@ body:has(.project-dialog[open]) {
   font-size: 0.7rem;
 }
 
-.contact-section {
-  padding-block: 5rem;
-}
-
 .contact-panel {
   display: flex;
   align-items: end;
@@ -735,6 +708,15 @@ body:has(.project-dialog[open]) {
 }
 
 .contact-panel .accent {
+  color: #415135;
+}
+
+/* The About copy and heading line sit inside the accent panel. */
+.contact-panel .heading-line {
+  background: #415135;
+}
+
+.contact-panel .about-copy {
   color: #415135;
 }
 
@@ -809,14 +791,9 @@ body:has(.project-dialog[open]) {
     margin-bottom: 0;
   }
 
-  .about-layout,
   .resume-layout {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-
-  .about-copy {
-    padding-top: 0;
   }
 
   .contact-panel {

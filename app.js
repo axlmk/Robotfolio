@@ -60,23 +60,32 @@
     const content = document.querySelector("#project-dialog-content");
     content.replaceChildren();
 
+    const header = document.createElement("div");
+    header.className = "dialog-header";
+
     const title = document.createElement("h3");
     title.id = "project-dialog-title";
     title.textContent = project.title;
-    content.append(title);
+    header.append(title);
+
+    if (project.link) {
+      const link = document.createElement("a");
+      link.className = "project-link";
+      link.href = project.link;
+      link.textContent = (project.linkLabel || "View project") + " ↗";
+      if (/^https?:\/\//i.test(project.link)) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      header.append(link);
+    }
+
+    content.append(header);
 
     const tools = document.createElement("p");
     tools.className = "dialog-tools";
     tools.textContent = project.tools;
     content.append(tools);
-
-    if (project.image) {
-      const hero = document.createElement("img");
-      hero.className = "dialog-hero";
-      hero.src = project.image;
-      hero.alt = "Main screenshot: " + project.title;
-      content.append(hero);
-    }
 
     appendDetailEntries(content, project.details, "dialog-text");
 
@@ -89,22 +98,6 @@
       content.append(gallery);
     }
 
-    const footer = document.createElement("div");
-    footer.className = "dialog-footer";
-
-    if (project.link) {
-      const link = document.createElement("a");
-      link.className = "project-link";
-      link.href = project.link;
-      link.textContent = (project.linkLabel || "View project") + " ↗";
-      if (/^https?:\/\//i.test(project.link)) {
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-      }
-      footer.append(link);
-    }
-
-    content.append(footer);
     projectDialog.showModal();
   }
 
@@ -247,18 +240,6 @@
         openProjectDialog(project);
       });
       bottom.append(readMore);
-    }
-
-    if (project.link) {
-      const link = document.createElement("a");
-      link.className = "project-link";
-      link.href = project.link;
-      link.textContent = (project.linkLabel || "View project") + " ↗";
-      if (/^https?:\/\//i.test(project.link)) {
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-      }
-      bottom.append(link);
     }
 
     info.append(meta, title, description, bottom);
