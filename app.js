@@ -69,6 +69,10 @@
     header.append(title);
 
     if (project.link) {
+      const line = document.createElement("span");
+      line.className = "heading-line";
+      header.append(line);
+
       const link = document.createElement("a");
       link.className = "project-link";
       link.href = project.link;
@@ -205,13 +209,6 @@
     category.className = "project-tag";
     category.textContent = project.categoryLabel;
     meta.append(category);
-
-    if (project.sample) {
-      const sample = document.createElement("span");
-      sample.className = "project-tag sample-tag";
-      sample.textContent = "Sample — replace me";
-      meta.append(sample);
-    }
 
     const title = document.createElement("h3");
     title.textContent = project.title;
