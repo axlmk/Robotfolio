@@ -66,7 +66,11 @@ media only loads when someone opens it. Guidelines for media files are in
 ## Preview locally
 
 Open `index.html` in a browser. The site uses relative asset paths and does not
-need a server, package installation, or compilation.
+need a server, package installation, or compilation. The 3D wordmark in the
+header is the one exception: browsers block its ES module and `media/boo.glb`
+fetch over `file://`, so over a plain file open it falls back to the plain
+"DEV." text. To see the rotating model locally, serve the folder once, for
+example `python -m http.server` and open `http://localhost:8000`.
 
 ## Publish with GitHub Pages
 

@@ -86,17 +86,32 @@ a:focus-visible {
   backdrop-filter: blur(14px);
 }
 
-.wordmark {
-  font-family: var(--display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.08em;
-}
-
-.wordmark span,
 .accent {
   color: var(--accent);
   text-shadow: var(--accent) 0 0 20px
+}
+
+/*
+  3D wordmark: the header slot hosts a small three.js canvas.
+*/
+.wordmark-model {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.model_3d {
+  position: absolute;
+  inset: 0;
+}
+
+.model_3d canvas {
+  display: block;
+  cursor: grab;
+}
+
+.model_3d canvas:active {
+  cursor: grabbing;
 }
 
 .site-nav {
@@ -341,7 +356,6 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
-.cover-type,
 .cover-number {
   position: relative;
   z-index: 1;
@@ -853,6 +867,11 @@ body:has(.project-dialog[open]) {
   .site-header {
     min-height: 66px;
     padding-inline: 1.25rem;
+  }
+
+  .wordmark-model {
+    width: 56px;
+    height: 56px;
   }
 
   .site-nav {

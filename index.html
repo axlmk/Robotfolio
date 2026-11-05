@@ -1,127 +1,163 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0e1118">
-    <meta
-      name="description"
-      content="A game developer's portfolio: real-time rendering, graphics programming, and game projects."
-    >
-    <title>Game Developer — Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="projects.js" defer></script>
-    <script src="app.js" defer></script>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <a class="wordmark" href="#main" aria-label="Portfolio home">DEV<span>.</span></a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="#projects">Projects</a>
-        <a class="nav-cta" href="#about">Let’s talk</a>
-        <a href="#resume">Resume</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1118">
+  <meta name="description" content="A game developer's portfolio: graphics programming, tech art, and game projects.">
+  <title>Axel Gauthier — Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="media/favicon.ico">
+  <script src="projects.js" defer></script>
+  <script src="app.js" defer></script>
+  <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+</head>
 
-    <main id="main">
-      <section class="projects-section section-pad" id="projects" aria-labelledby="projects-title">
-        <div class="page-width">
-          <div class="section-heading">
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wordmark-model">
+      <span class="model_3d" aria-hidden="true"></span>
+    </div>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#projects">Projects</a>
+      <a class="nav-cta" href="#about">Let’s talk</a>
+      <a href="#resume">Resume</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="projects-section section-pad" id="projects" aria-labelledby="projects-title">
+      <div class="page-width">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SELECTED WORK <span class="heading-line"></span></p>
+            <h2 id="projects-title">Projects<span class="accent">.</span></h2>
+          </div>
+        </div>
+
+        <div class="filters" role="group" aria-label="Filter projects">
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All work</button>
+          <button class="filter-button" type="button" data-filter="graphics" aria-pressed="false">Graphics</button>
+          <button class="filter-button" type="button" data-filter="unreal" aria-pressed="false">Unreal</button>
+          <button class="filter-button" type="button" data-filter="unity" aria-pressed="false">Unity</button>
+        </div>
+
+        <div class="project-grid" id="project-grid" aria-live="polite"></div>
+        <noscript>
+          <p class="empty-message">Enable JavaScript to view projects. Project information is maintained in
+            <code>projects.js</code>.
+          </p>
+        </noscript>
+      </div>
+    </section>
+
+    <section class="about-section section-pad" id="about" aria-labelledby="about-title">
+      <div class="page-width contact-panel">
+        <div>
+          <p class="eyebrow">A LITTLE ABOUT ME <span class="heading-line"></span></p>
+          <h2 id="about-title">Curiosity is<br>part of the craft<span class="accent">.</span></h2>
+          <div class="about-copy">
+            <p>
+              With a degree in computer systems and networks, I shifted my focus to game development and am particularly
+              interested in 3D programming, gameplay programming and tech art.
+            </p>
+            <p>
+              In my spare time, I develop a wide variety of projects, ranging from creating 3D scenes to more practical
+              experiments in electronics and DIY. I believe it is this multidisciplinary approach that fuels my desire
+              to move towards hybrid roles. My career change is therefore part of a search for meaning and lasting
+              commitment in my work.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="contact-links">
+            <a class="button button-dark contact-email"
+              href="mailto:axel.gauthier.pro@gmail.com">axel.gauthier.pro@gmail.com
+              <span aria-hidden="true">↗</span></a>
+            <a class="button button-dark" href="https://www.linkedin.com/in/axel-gauthier-xelou/">LinkedIn <span
+                aria-hidden="true">↗</span></a>
+            <a class="button button-dark" href="https://github.com/axlmk/">GitHub <span aria-hidden="true">↗</span></a>
+            <a class="button button-dark" href="https://www.artstation.com/akucelu">Artstation <span
+                aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resume-section section-pad" id="resume" aria-labelledby="resume-title">
+      <div class="page-width resume-layout">
+        <div class="resume-intro">
+          <p class="eyebrow">EXPERIENCE & EDUCATION <span class="heading-line"></span></p>
+          <h2 id="resume-title">The short<br>version<span class="accent">.</span></h2>
+          <a class="button button-secondary" id="resume-download" href="resume.html"
+            download="game-developer-resume.html">
+            Download resume <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+        <div class="resume-card">
+          <div class="resume-card-top">
             <div>
-              <p class="eyebrow">SELECTED WORK <span class="heading-line"></span></p>
-              <h2 id="projects-title">Projects<span class="accent">.</span></h2>
+              <p class="resume-name">Axel Gauthier</p>
+              <p class="resume-role">Graphics Programmer · Tech artist</p>
+            </div>
+            <span class="resume-location">Toulouse, France</span>
+          </div>
+          <div class="resume-entry">
+            <span class="resume-date">202X — NOW</span>
+            <div>
+              <h3>Game Developer</h3>
+              <p>Studio or personal project · Add a concise impact-focused summary.</p>
             </div>
           </div>
-
-          <div class="filters" role="group" aria-label="Filter projects">
-            <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All work</button>
-            <button class="filter-button" type="button" data-filter="graphics" aria-pressed="false">Graphics</button>
-            <button class="filter-button" type="button" data-filter="unreal" aria-pressed="false">Unreal</button>
-            <button class="filter-button" type="button" data-filter="unity" aria-pressed="false">Unity</button>
-          </div>
-
-          <div class="project-grid" id="project-grid" aria-live="polite"></div>
-          <noscript>
-            <p class="empty-message">Enable JavaScript to view projects. Project information is maintained in <code>projects.js</code>.</p>
-          </noscript>
-        </div>
-      </section>
-
-      <section class="about-section section-pad" id="about" aria-labelledby="about-title">
-        <div class="page-width contact-panel">
-          <div>
-            <p class="eyebrow">A LITTLE ABOUT ME <span class="heading-line"></span></p>
-            <h2 id="about-title">Curiosity is<br>part of the craft<span class="accent">.</span></h2>
-            <div class="about-copy">
-              <p>
-                I’m a game developer interested in the space where engineering meets
-                play. From writing a renderer in C++ and OpenGL to building interactive
-                experiences in Unreal and Unity, I enjoy taking ideas from first
-                experiment to something you can explore.
-              </p>
-              <p>
-                This portfolio is a work in progress. Replace this introduction with a
-                few lines about your experience, the roles you’re looking for, and what
-                you bring to a team.
-              </p>
+          <div class="resume-entry">
+            <span class="resume-date">202X — 202X</span>
+            <div>
+              <h3>Degree or qualification</h3>
+              <p>School name · Relevant focus, award, or achievement.</p>
             </div>
           </div>
-          <div>
-            <div class="contact-links">
-              <a class="button button-dark contact-email" href="mailto:your.email@example.com">your.email@example.com <span aria-hidden="true">↗</span></a>
-              <a class="button button-dark" href="https://www.linkedin.com/in/your-handle/">LinkedIn <span aria-hidden="true">↗</span></a>
-              <a class="button button-dark" href="https://github.com/your-handle">GitHub <span aria-hidden="true">↗</span></a>
+          <div class="skill-row">
+            <span class="resume-date">TOOLKIT</span>
+            <div class="skill-list">
+              <span>C++</span><span>OpenGL</span><span>Unreal</span><span>Unity</span><span>Git</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  </main>
 
-      <section class="resume-section section-pad" id="resume" aria-labelledby="resume-title">
-        <div class="page-width resume-layout">
-          <div class="resume-intro">
-            <p class="eyebrow">EXPERIENCE & EDUCATION <span class="heading-line"></span></p>
-            <h2 id="resume-title">The short<br>version<span class="accent">.</span></h2>
-            <a class="button button-secondary" id="resume-download" href="resume.html" download="game-developer-resume.html">
-              Download resume <span aria-hidden="true">↓</span>
-            </a>
-          </div>
-          <div class="resume-card">
-            <div class="resume-card-top">
-              <div>
-                <p class="resume-name">YOUR NAME</p>
-                <p class="resume-role">Game Developer · Graphics Programmer</p>
-              </div>
-              <span class="resume-location">YOUR CITY, COUNTRY</span>
-            </div>
-            <div class="resume-entry">
-              <span class="resume-date">202X — NOW</span>
-              <div><h3>Game Developer</h3><p>Studio or personal project · Add a concise impact-focused summary.</p></div>
-            </div>
-            <div class="resume-entry">
-              <span class="resume-date">202X — 202X</span>
-              <div><h3>Degree or qualification</h3><p>School name · Relevant focus, award, or achievement.</p></div>
-            </div>
-            <div class="skill-row">
-              <span class="resume-date">TOOLKIT</span>
-              <div class="skill-list"><span>C++</span><span>OpenGL</span><span>Unreal</span><span>Unity</span><span>Git</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!--
+  <!--
       Project deep dive: opened by the "Read more" button on a project card.
       The content inside is filled by app.js from the project's entry in
       projects.js.
     -->
-    <dialog class="project-dialog" id="project-dialog">
-      <div class="dialog-inner">
-        <button class="dialog-close" id="dialog-close" type="button">Close</button>
-        <div id="project-dialog-content"></div>
-      </div>
-    </dialog>
-  </body>
+  <dialog class="project-dialog" id="project-dialog">
+    <div class="dialog-inner">
+      <button class="dialog-close" id="dialog-close" type="button">Close</button>
+      <div id="project-dialog-content"></div>
+    </div>
+  </dialog>
+
+  <script>
+    // The 3D wordmark is decorative. Loading it after the "load" event keeps
+    // three.js and boo.glb off the critical path, so first paint is unaffected.
+    window.addEventListener("load", function () {
+      import("./avatar.js").catch(function (error) {
+        console.error("Could not load the 3D wordmark:", error);
+      });
+    });
+  </script>
+</body>
+
 </html>

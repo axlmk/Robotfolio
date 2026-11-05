@@ -150,12 +150,6 @@
       cover.append(mark);
     }
 
-    const type = document.createElement("span");
-    type.className = "cover-type";
-    type.setAttribute("aria-hidden", "true");
-    type.textContent = project.categoryLabel;
-    cover.append(type);
-
     const number = document.createElement("span");
     number.className = "cover-number";
     number.setAttribute("aria-hidden", "true");
