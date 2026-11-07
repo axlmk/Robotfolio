@@ -366,7 +366,7 @@ h2 {
   z-index: 1;
   color: #e4e7f6;
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
 }
 
@@ -414,7 +414,7 @@ h2 {
   color: var(--accent);
   cursor: pointer;
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transition: background 160ms ease, color 160ms ease;
@@ -491,7 +491,7 @@ body:has(.project-dialog[open]) {
   color: var(--muted);
   cursor: pointer;
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -517,7 +517,7 @@ body:has(.project-dialog[open]) {
   margin-bottom: 3rem;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
 }
 
 /* Title row of the deep dive: the project name with its link beside it. */
@@ -586,7 +586,7 @@ body:has(.project-dialog[open]) {
   padding-top: 0.5rem;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.64rem;
+  font-size: 0.7rem;
   margin-bottom: 1rem;
   margin-left: 5%;
 }
@@ -611,7 +611,7 @@ body:has(.project-dialog[open]) {
   border-radius: 999px;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
 }
 
@@ -646,7 +646,7 @@ body:has(.project-dialog[open]) {
 .project-tools {
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
 }
 
 .empty-message {
@@ -736,7 +736,7 @@ body:has(.project-dialog[open]) {
 .resume-date {
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.05em;
 }
 
@@ -757,7 +757,7 @@ body:has(.project-dialog[open]) {
   margin: 1.35rem 0 0;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
