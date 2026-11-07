@@ -291,6 +291,11 @@ h2 {
   gap: 1.15rem;
 }
 
+/* Cards hidden by a filter button. */
+.project-card[hidden] {
+  display: none;
+}
+
 .project-card {
   display: flex;
   min-width: 0;

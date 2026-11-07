@@ -1,7 +1,9 @@
 # Game Developer Portfolio
 
-A small, static portfolio made with plain HTML, CSS, and JavaScript. It has no
-build step or runtime dependencies and can be hosted directly with GitHub Pages.
+A small, static portfolio made with plain HTML, CSS, and JavaScript: no
+framework and no packages to install. A zero-dependency Node script (run
+automatically by GitHub Actions) bakes the project data into the HTML when
+publishing, so visitors get a finished page.
 
 ## Personalize the portfolio
 
@@ -66,17 +68,39 @@ media only loads when someone opens it. Guidelines for media files are in
 ## Preview locally
 
 Open `index.html` in a browser. The site uses relative asset paths and does not
-need a server, package installation, or compilation. The 3D wordmark in the
+need a server, package installation, or compilation. While editing, the project
+cards are generated in the browser from `projects.js`; the published site gets
+the same HTML baked in (see below). The 3D wordmark in the
 header is the one exception: browsers block its ES module and `media/boo.glb`
 fetch over `file://`, so over a plain file open it falls back to the plain
 "DEV." text. To see the rotating model locally, serve the folder once, for
 example `python -m http.server` and open `http://localhost:8000`.
 
+## How publishing builds the page
+
+Editing stays data-driven (`projects.js`), but visitors get a page that is
+already assembled:
+
+- `templates.js` holds the HTML for one project card and one deep dive. It is
+  the single source of truth for that markup.
+- While editing locally, `app.js` calls these templates to fill the page in
+  the browser, so you always see exactly the page that will be published.
+- On every push to `main`, the GitHub Actions workflow (`.github/workflows/
+  deploy.yml`) runs `node build.js`, which bakes the finished cards and deep
+  dives into `dist/index.html` and removes `projects.js` and `templates.js`
+  from it. Only `app.js` is left, and just to wire the interactions (filters,
+  video buttons, deep dives). GitHub Pages then serves `dist/`.
+
+The generated `dist/` folder is never committed; the source files stay exactly
+as you edit them. To check the published page locally, run `node build.js` and
+open `dist/index.html`.
+
 ## Publish with GitHub Pages
 
-In the repository on GitHub, open **Settings → Pages**, choose **Deploy from a
-branch**, select `main` and the `/ (root)` folder, then save. GitHub Pages will
-publish the static files from the repository root.
+The workflow deploys automatically on every push to `main`. Set it up once:
+in the repository on GitHub, open **Settings → Pages**, and under **Build and
+deployment** choose **GitHub Actions** as the source. Afterwards, every push to
+`main` rebuilds and republishes the site on its own.
 
 ## License
 

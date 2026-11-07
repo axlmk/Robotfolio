@@ -9,6 +9,7 @@
   <title>Axel Gauthier — Portfolio</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/x-icon" href="media/favicon.ico">
+  <script src="templates.js" defer></script>
   <script src="projects.js" defer></script>
   <script src="app.js" defer></script>
   <script type="importmap">
@@ -53,10 +54,9 @@
         </div>
 
         <div class="project-grid" id="project-grid" aria-live="polite"></div>
+        <p class="empty-message" id="empty-category-message" hidden>No projects in this category yet.</p>
         <noscript>
-          <p class="empty-message">Enable JavaScript to view projects. Project information is maintained in
-            <code>projects.js</code>.
-          </p>
+          <p class="empty-message">Enable JavaScript to filter projects and open the deep dives.</p>
         </noscript>
       </div>
     </section>
@@ -165,16 +165,11 @@
   </main>
 
   <!--
-      Project deep dive: opened by the "Read more" button on a project card.
-      The content inside is filled by app.js from the project's entry in
-      projects.js.
+      Deep dives for the projects, opened by the "Read more" buttons.
+      While editing, app.js fills this container from projects.js; when the
+      site is published, build.js bakes the finished pop-overs in here.
     -->
-  <dialog class="project-dialog" id="project-dialog">
-    <div class="dialog-inner">
-      <button class="dialog-close" id="dialog-close" type="button">Close</button>
-      <div id="project-dialog-content"></div>
-    </div>
-  </dialog>
+  <div id="project-dialogs"></div>
 
   <script>
     // The 3D wordmark is decorative. Loading it after the "load" event keeps

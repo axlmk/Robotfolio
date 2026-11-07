@@ -1,233 +1,41 @@
 (function () {
+  // On the published site, build.js has already written the finished cards
+  // and deep dives into index.html, and neither projects.js nor templates.js
+  // is downloaded. This file then only wires up the interactions below.
+  //
+  // While editing locally, projects.js and templates.js load: the same
+  // templates build the same HTML here in the browser, so the local preview
+  // matches the published page exactly.
   const projectGrid = document.querySelector("#project-grid");
+  const dialogsHost = document.querySelector("#project-dialogs");
   const filterButtons = document.querySelectorAll("[data-filter]");
-  const projectDialog = document.querySelector("#project-dialog");
-  const projects = window.portfolioProjects;
+  const emptyMessage = document.querySelector("#empty-category-message");
 
-  if (!projectGrid || !Array.isArray(projects)) {
-    throw new Error("Project list could not be loaded. Check projects.js.");
+  if (
+    projectGrid &&
+    dialogsHost &&
+    projectGrid.children.length === 0 &&
+    Array.isArray(window.portfolioProjects) &&
+    window.portfolioTemplates
+  ) {
+    projectGrid.innerHTML = window.portfolioProjects
+      .map(function (project, index) {
+        return window.portfolioTemplates.projectCard(project, index);
+      })
+      .join("\n");
+
+    dialogsHost.innerHTML = window.portfolioProjects
+      .map(function (project, index) {
+        return window.portfolioTemplates.projectDialog(project, index);
+      })
+      .join("\n");
   }
 
-  // Builds the opt-in video player for a card cover: a small button that
-  // swaps the screenshot for a muted, looping clip, and swaps it back.
-  // The video file only downloads when the reader clicks play.
-  function createCoverVideo(project, cover) {
-    const video = document.createElement("video");
-    video.className = "cover-video";
-    video.src = project.video;
-    video.muted = true;
-    video.loop = true;
-    video.autoplay = true;
-    video.setAttribute("playsinline", "");
-    video.setAttribute("preload", "none");
-  }
-
-  // Fills the shared <dialog> with the deep dive for one project and opens it.
-  // A project has a deep dive when it has details paragraphs or gallery media.
-  function openProjectDialog(project) {
-    const content = document.querySelector("#project-dialog-content");
-    content.replaceChildren();
-
-    const header = document.createElement("div");
-    header.className = "dialog-header";
-
-    const title = document.createElement("h3");
-    title.id = "project-dialog-title";
-    title.textContent = project.title;
-    header.append(title);
-
-    if (project.link) {
-      const line = document.createElement("span");
-      line.className = "heading-line";
-      header.append(line);
-
-      const link = document.createElement("a");
-      link.className = "project-link";
-      link.href = project.link;
-      link.textContent = (project.linkLabel || "View project") + " ↗";
-      if (/^https?:\/\//i.test(project.link)) {
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-      }
-      header.append(link);
-    }
-
-    content.append(header);
-
-    const tools = document.createElement("p");
-    tools.className = "dialog-tools";
-    tools.textContent = project.tools;
-    content.append(tools);
-
-    appendDetailEntries(content, project.details, "dialog-text");
-
-    if (project.media && project.media.length > 0) {
-      const gallery = document.createElement("div");
-      gallery.className = "media-gallery";
-      project.media.forEach(function (item) {
-        gallery.append(createGalleryItem(item));
-      });
-      content.append(gallery);
-    }
-
-    projectDialog.showModal();
-  }
-
-  // Renders a deep-dive "details" list in order: plain strings become
-  // paragraphs, media objects ({ type: "image" | "video", src, ... }) become
-  // figures, so text, screenshots, and clips can be interleaved freely.
-  function appendDetailEntries(container, entries, textClass) {
-    (entries || []).forEach(function (entry) {
-      if (entry && typeof entry === "object") {
-        const figure = createGalleryItem(entry);
-        figure.classList.add("media-item-between");
-        container.append(figure);
-      } else {
-        const paragraph = document.createElement("p");
-        paragraph.className = textClass;
-        paragraph.textContent = entry;
-        container.append(paragraph);
-      }
-    });
-  }
-
-  // One screenshot or clip in the deep-dive gallery, with its caption.
-  function createGalleryItem(item) {
-    const figure = document.createElement("figure");
-    figure.className = item.type === "video" ? "media-item media-item-video" : "media-item";
-
-    if (item.type === "video") {
-      const video = document.createElement("video");
-      video.className = "media-video";
-      video.src = item.src;
-      video.controls = false;
-      video.setAttribute("playsinline", "");
-      video.setAttribute("preload", "auto");
-      video.autoplay = true;
-      video.loop = true;
-
-      figure.append(video);
-    } else {
-      const image = document.createElement("img");
-      image.className = "media-image";
-      image.src = item.src;
-      image.alt = item.caption || "Project screenshot";
-      image.loading = "lazy";
-      figure.append(image);
-    }
-
-    if (item.caption) {
-      const caption = document.createElement("figcaption");
-      caption.textContent = item.caption;
-      figure.append(caption);
-    }
-
-    return figure;
-  }
-
-  function createProjectCard(project, index) {
-    const article = document.createElement("article");
-    article.className = "project-card";
-
-    const cover = document.createElement("div");
-    cover.className = "project-cover";
-
-    if (project.image) {
-      // A real screenshot replaces the decorative fallback cover.
-      cover.classList.add("has-image");
-
-      const image = document.createElement("img");
-      image.className = "cover-image";
-      image.src = project.image;
-      image.alt = "Screenshot: " + project.title;
-      image.loading = "lazy";
-      cover.append(image);
-    } else {
-      const mark = document.createElement("span");
-      mark.className = "cover-mark";
-      mark.setAttribute("aria-hidden", "true");
-      mark.textContent = project.mark || "✳";
-      cover.append(mark);
-    }
-
-    const number = document.createElement("span");
-    number.className = "cover-number";
-    number.setAttribute("aria-hidden", "true");
-    number.textContent = String(index + 1).padStart(2, "0");
-    cover.append(number);
-
-    if (project.video) {
-      createCoverVideo(project, cover);
-    }
-
-    const info = document.createElement("div");
-    info.className = "project-info";
-
-    const meta = document.createElement("div");
-    meta.className = "project-meta";
-
-    const category = document.createElement("span");
-    category.className = "project-tag";
-    category.textContent = project.categoryLabel;
-    meta.append(category);
-
-    const title = document.createElement("h3");
-    title.textContent = project.title;
-
-    const description = document.createElement("p");
-    description.textContent = project.description;
-
-    const bottom = document.createElement("div");
-    bottom.className = "project-bottom";
-
-    const tools = document.createElement("span");
-    tools.className = "project-tools";
-    tools.textContent = project.tools;
-    bottom.append(tools);
-
-    const hasDeepDive =
-      (project.details && project.details.length > 0) ||
-      (project.media && project.media.length > 0);
-
-    if (hasDeepDive && projectDialog) {
-      const readMore = document.createElement("button");
-      readMore.type = "button";
-      readMore.className = "button button-secondary button-compact";
-      readMore.textContent = "Read more";
-      readMore.addEventListener("click", function () {
-        openProjectDialog(project);
-      });
-      bottom.append(readMore);
-    }
-
-    info.append(meta, title, description, bottom);
-    article.append(cover, info);
-    return article;
-  }
-
-  function renderProjects(filter) {
-    const visibleProjects = projects.filter(function (project) {
-      return filter === "all" || project.category === filter;
-    });
-
-    projectGrid.replaceChildren();
-
-    if (visibleProjects.length === 0) {
-      const message = document.createElement("p");
-      message.className = "empty-message";
-      message.textContent = "No projects in this category yet.";
-      projectGrid.append(message);
-      return;
-    }
-
-    visibleProjects.forEach(function (project, index) {
-      projectGrid.append(createProjectCard(project, index));
-    });
-  }
-
+  // --- Filters: show and hide the cards already on the page ---
   filterButtons.forEach(function (button) {
     button.addEventListener("click", function () {
       const selectedFilter = button.dataset.filter;
+      let visibleCount = 0;
 
       filterButtons.forEach(function (filterButton) {
         const isSelected = filterButton === button;
@@ -235,29 +43,67 @@
         filterButton.setAttribute("aria-pressed", String(isSelected));
       });
 
-      renderProjects(selectedFilter);
+      projectGrid.querySelectorAll(".project-card").forEach(function (card) {
+        const showsCard = selectedFilter === "all" || card.dataset.category === selectedFilter;
+        card.hidden = !showsCard;
+        if (showsCard) {
+          visibleCount += 1;
+        }
+      });
+
+      if (emptyMessage) {
+        emptyMessage.hidden = visibleCount > 0;
+      }
     });
   });
 
-  if (projectDialog) {
-    document.querySelector("#dialog-close").addEventListener("click", function () {
-      projectDialog.close();
+  // --- Cover videos: the small play/stop button on a card ---
+  document.querySelectorAll(".cover-play").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const cover = button.closest(".project-cover");
+      const video = cover.querySelector(".cover-video");
+      const title = button.closest(".project-card").querySelector("h3").textContent;
+      const playing = cover.classList.toggle("is-playing");
+
+      button.textContent = playing ? "Stop video" : "Play video";
+      button.setAttribute("aria-pressed", String(playing));
+      button.setAttribute("aria-label", (playing ? "Stop" : "Play") + " video preview of " + title);
+
+      if (playing) {
+        video.play().catch(function () {});
+      } else {
+        video.pause();
+      }
+    });
+  });
+
+  // --- Deep dives: the pop-over opened by "Read more" on a card ---
+  document.querySelectorAll("[data-dialog-id]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const dialog = document.getElementById(button.dataset.dialogId);
+      if (dialog) {
+        dialog.showModal();
+      }
+    });
+  });
+
+  document.querySelectorAll(".project-dialog").forEach(function (dialog) {
+    dialog.querySelector(".dialog-close").addEventListener("click", function () {
+      dialog.close();
     });
 
     // Clicking the dark area around the deep dive closes it.
-    projectDialog.addEventListener("click", function (event) {
-      if (event.target === projectDialog) {
-        projectDialog.close();
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) {
+        dialog.close();
       }
     });
 
-    // No clip keeps playing (or sounding) after the deep dive closes.
-    projectDialog.addEventListener("close", function () {
-      projectDialog.querySelectorAll("video").forEach(function (video) {
+    // No clip keeps playing after the deep dive closes.
+    dialog.addEventListener("close", function () {
+      dialog.querySelectorAll("video").forEach(function (video) {
         video.pause();
       });
     });
-  }
-
-  renderProjects("all");
+  });
 })();

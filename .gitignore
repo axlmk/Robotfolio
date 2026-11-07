@@ -10,7 +10,7 @@ Desktop.ini
 *.swo
 *.tmp
 
-# Dependencies, generated output, and logs
+# Generated output and logs
 node_modules/
 dist/
 coverage/
