@@ -34,7 +34,7 @@
       : '<span class="cover-mark" aria-hidden="true">' + escapeHTML(project.mark || "✳") + "</span>";
 
     const coverVideo = project.video
-      ? '<video class="cover-video" src="' + escapeHTML(project.video) + '" muted loop playsinline preload="none"></video>' +
+      ? '<video class="cover-video" src="' + escapeHTML(project.video) + '" muted loop autoplay"></video>' +
         '<button class="cover-play" type="button" aria-pressed="false" aria-label="Play video preview of ' + escapeHTML(project.title) + '">Play video</button>'
       : "";
 
@@ -118,8 +118,7 @@
       (extraClass ? " " + extraClass : "");
 
     const media = item.type === "video"
-      ? '<video class="media-video" src="' + escapeHTML(item.src) + '" controls playsinline preload="none"' +
-        (item.poster ? ' poster="' + escapeHTML(item.poster) + '"' : "") + "></video>"
+      ? '<video class="media-video" src="' + escapeHTML(item.src) + '" muted autoplay loop></video>'
       : '<img class="media-image" src="' + escapeHTML(item.src) + '" alt="' + escapeHTML(item.caption || "Project screenshot") + '" loading="lazy">';
 
     const caption = item.caption
