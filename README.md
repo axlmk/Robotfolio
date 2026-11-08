@@ -90,6 +90,12 @@ already assembled:
   dives into `dist/index.html` and removes `projects.js` and `templates.js`
   from it. Only `app.js` is left, and just to wire the interactions (filters,
   video buttons, deep dives). GitHub Pages then serves `dist/`.
+- The shipped text files (`index.html`, `styles.css`, `app.js`, `avatar.js`)
+  are also minified: comments, indentation, and needless spaces are removed,
+  with string contents left untouched so nothing breaks. The sources in the
+  repository keep all comments and formatting for comfortable editing; only
+  what visitors download is compact. `resume.html` ships as is, since it is
+  a standalone document meant to be read directly.
 
 The generated `dist/` folder is never committed; the source files stay exactly
 as you edit them. To check the published page locally, run `node build.js` and
