@@ -3,9 +3,6 @@
 // Media fields (all optional):
 //   image: screenshot shown directly on the project card, e.g. "media/my-project.jpg"
 //          Use a 16:9 JPG around 1200 pixels wide, compressed (a few hundred KB max).
-//   video: short clip the reader can play with a button on the card, e.g. "media/my-project.mp4"
-//          Muted and looped automatically; only downloads when someone clicks play.
-//          Use a 10-30 second MP4, a few MB max.
 //
 // Optional deep dive (extra text + more pictures and videos), shown in a pop-over
 // when the reader clicks "Read more" on the card:
@@ -27,7 +24,6 @@ window.portfolioProjects = [
     tools: "C++ · OpenGL · GLSL",
     mark: "{ }",
     image: "",
-    video: "",
     details: [
       "Sample deep dive - replace these paragraphs with the story of the project: the problem you set out to solve, the parts you are proud of, and what you learned building it.",
       "Keep each paragraph short (2 to 4 sentences). Recruiters skim: lead with the most impressive fact, then the interesting technical detail."
@@ -44,8 +40,7 @@ window.portfolioProjects = [
     description: "A third-person environment prototype focused on atmosphere, responsive movement, and world-building.",
     tools: "Unreal Engine · C++",
     mark: "UE",
-    image: "",
-    video: "media/frank/2.webm",
+    image: "media/frank/main.png",
     details: [
       "New year, new game created in 48 hours—this time without tying ourselves to an existing game jam. On top of that, we wanted to aim higher by creating a fully 3D game using Unreal Engine. Since I was the only one with some basic 3D modeling skills (which clearly did not cover the project’s needs), we chose to rely on kitbashing to build the universe in which our robot Frank would evolve. Frank’s goal is to keep a crumbling spaceship operational. To do so, he must find all the parts of a level that are breaking down and repair them within a limited time.",
       { type: "video", src: "media/frank/1.webm", caption: "Sample clip - replace with a 10-30 second capture of the prototype." },
@@ -67,7 +62,6 @@ window.portfolioProjects = [
     tools: "Unity · C#",
     mark: "01",
     image: "",
-    video: "",
     details: [],
     media: [],
     sample: true,
@@ -82,7 +76,6 @@ window.portfolioProjects = [
     tools: "C++ · OpenGL · GLSL",
     mark: "∿",
     image: "",
-    video: "",
     details: [],
     media: [],
     sample: true,

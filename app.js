@@ -56,27 +56,6 @@
       }
     });
   });
-
-  // --- Cover videos: the small play/stop button on a card ---
-  document.querySelectorAll(".cover-play").forEach(function (button) {
-    button.addEventListener("click", function () {
-      const cover = button.closest(".project-cover");
-      const video = cover.querySelector(".cover-video");
-      const title = button.closest(".project-card").querySelector("h3").textContent;
-      const playing = cover.classList.toggle("is-playing");
-
-      button.textContent = playing ? "Stop video" : "Play video";
-      button.setAttribute("aria-pressed", String(playing));
-      button.setAttribute("aria-label", (playing ? "Stop" : "Play") + " video preview of " + title);
-
-      if (playing) {
-        video.play().catch(function () {});
-      } else {
-        video.pause();
-      }
-    });
-  });
-
   // --- Deep dives: the pop-over opened by "Read more" on a card ---
   document.querySelectorAll("[data-dialog-id]").forEach(function (button) {
     button.addEventListener("click", function () {
