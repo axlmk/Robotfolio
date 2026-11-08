@@ -56,17 +56,50 @@
       }
     });
   });
-  // --- Deep dives: the pop-over opened by "Read more" on a card ---
-  document.querySelectorAll("[data-dialog-id]").forEach(function (button) {
-    button.addEventListener("click", function () {
-      const dialog = document.getElementById(button.dataset.dialogId);
-      if (dialog) {
-        dialog.showModal();
+  // --- Deep dives, addressed through the page address ---
+  // Every project with a slug (see projects.js) gets an address like
+  // #frank. Clicking its Read more button opens its deep dive
+  // and moves the browser address; closing the deep dive cleans it up.
+  // Typing or sharing the address, reloading, or using the browser back
+  // and forward buttons opens and closes the matching deep dive.
+  const dialogs = document.querySelectorAll(".project-dialog");
+  const dialogBySlug = {};
+
+  dialogs.forEach(function (dialog) {
+    if (dialog.dataset.slug) {
+      dialogBySlug[dialog.dataset.slug] = dialog;
+    }
+  });
+
+  function openDialog(dialog) {
+    dialog.showModal();
+    if (dialog.dataset.slug && window.location.hash !== "#" + dialog.dataset.slug) {
+      window.location.hash = dialog.dataset.slug;
+    }
+  }
+
+  // Makes the page match the address, whatever changed it.
+  function syncWithAddress() {
+    const target = dialogBySlug[window.location.hash.replace(/^#/, "")];
+
+    dialogs.forEach(function (dialog) {
+      if (dialog.open && dialog !== target) {
+        dialog.close();
       }
+    });
+
+    if (target && !target.open) {
+      target.showModal();
+    }
+  }
+  // The "Read more" button opens its project's deep dive.
+  document.querySelectorAll("button[data-dialog-id]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      openDialog(document.getElementById(button.dataset.dialogId));
     });
   });
 
-  document.querySelectorAll(".project-dialog").forEach(function (dialog) {
+  dialogs.forEach(function (dialog) {
     dialog.querySelector(".dialog-close").addEventListener("click", function () {
       dialog.close();
     });
@@ -78,11 +111,21 @@
       }
     });
 
-    // No clip keeps playing after the deep dive closes.
     dialog.addEventListener("close", function () {
+      // No clip keeps playing after the deep dive closes.
       dialog.querySelectorAll("video").forEach(function (video) {
         video.pause();
       });
+
+      // Clean the address, without adding a history entry.
+      if (dialog.dataset.slug && window.location.hash === "#" + dialog.dataset.slug) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
     });
   });
+
+  window.addEventListener("hashchange", syncWithAddress);
+
+  // A deep link typed, shared, or reloaded opens the project on arrival.
+  syncWithAddress();
 })();

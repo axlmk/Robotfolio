@@ -3,6 +3,9 @@
 // Media fields (all optional):
 //   image: screenshot shown directly on the project card, e.g. "media/my-project.jpg"
 //          Use a 16:9 JPG around 1200 pixels wide, compressed (a few hundred KB max).
+//   slug: the project's name in the page address, e.g. slug: "frank" makes
+//          the deep dive open at example.com/#frank. Clicking its Read more
+//          button moves the address there too.
 //
 // Optional deep dive (extra text + more pictures and videos), shown in a pop-over
 // when the reader clicks "Read more" on the card:
@@ -18,6 +21,7 @@
 window.portfolioProjects = [
   {
     title: "Realtime Rendering Sandbox",
+    slug: "rendering-sandbox",
     category: "graphics",
     categoryLabel: "Graphics",
     description: "A C++ and OpenGL playground for experimenting with lighting, materials, and real-time rendering.",
@@ -35,6 +39,7 @@ window.portfolioProjects = [
   },
   {
     title: "Frank",
+    slug: "frank",
     category: "unreal",
     categoryLabel: "Unreal Engine",
     description: "A third-person environment prototype focused on atmosphere, responsive movement, and world-building.",
@@ -56,6 +61,7 @@ window.portfolioProjects = [
   },
   {
     title: "Gameplay Systems Study",
+    slug: "gameplay-systems",
     category: "unity",
     categoryLabel: "Unity",
     description: "A small gameplay prototype exploring player controls, interaction, and a clear feedback loop.",
@@ -70,6 +76,7 @@ window.portfolioProjects = [
   },
   {
     title: "Procedural Scene Experiment",
+    slug: "procedural-scene",
     category: "graphics",
     categoryLabel: "Graphics",
     description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",

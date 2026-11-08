@@ -77,7 +77,9 @@
         : "";
 
     return (
-      '<dialog class="project-dialog" id="' + id + '" aria-labelledby="' + titleId + '">' +
+      '<dialog class="project-dialog" id="' + id + '"' +
+        (project.slug ? ' data-slug="' + escapeHTML(project.slug) + '"' : '') +
+        ' aria-labelledby="' + titleId + '">' +
         '<div class="dialog-inner">' +
           '<button class="dialog-close" type="button">Close</button>' +
           '<div class="dialog-header">' +

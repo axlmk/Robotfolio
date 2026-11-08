@@ -61,6 +61,15 @@ The deep dive opens in a pop-over over the page when the reader clicks
 media only loads when someone opens it. Guidelines for media files are in
 [media/README.md](./media/README.md).
 
+## Give a project its own address
+
+Give a project a `slug` and its deep dive becomes reachable through the
+page address: `slug: "frank"` makes `your-site.github.io/#frank` open
+the Frank deep dive on arrival. Clicking its Read more button moves
+the browser to that address, and the back and
+forward buttons open and close the deep dives. A slug only matters for
+projects with a deep dive; use lowercase words joined by hyphens.
+
 ## Preview locally
 
 Open `index.html` in a browser. The site uses relative asset paths and does not
