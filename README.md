@@ -11,7 +11,7 @@ publishing, so visitors get a finished page.
    `index.html`.
 2. Replace the sample entries in `projects.js` with your own work. Each entry
    accepts a title, category (`graphics`, `unreal`, or `unity`), category label,
-   short description, tools, a small cover mark, and an optional project link.
+   short description, tools, and an optional project link.
    Entries can also show a screenshot —
    see "Show screenshots and videos" below. Set `sample` to `true` for example
    content; omit it or set it to `false` for real projects. Copy an entry to

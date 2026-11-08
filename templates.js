@@ -31,8 +31,7 @@
 
     const coverMedia = project.image
       ? '<img class="cover-image" src="' + escapeHTML(project.image) + '" alt="Screenshot: ' + escapeHTML(project.title) + '" loading="lazy">'
-      : '<span class="cover-mark" aria-hidden="true">' + escapeHTML(project.mark || "✳") + "</span>";
-
+      : "";
     const readMoreButton = hasDeepDive
       ? '<button class="button button-secondary button-compact" type="button" data-dialog-id="project-dialog-' + index + '">Read more</button>'
       : "";
