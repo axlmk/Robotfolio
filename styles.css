@@ -98,6 +98,8 @@ a:focus-visible {
   position: relative;
   width: 64px;
   height: 64px;
+  /* The boo sinks out through the bottom when a project card is hovered. */
+  overflow: hidden;
 }
 
 .model_3d {
@@ -112,6 +114,45 @@ a:focus-visible {
 
 .model_3d canvas:active {
   cursor: grabbing;
+}
+
+/* The boo's rise and sink between the header and the project cards: quick
+   so card-to-card browsing stays snappy. */
+.model_3d canvas,
+.boo-peek canvas {
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.3, 1.1);
+}
+
+/* Header boo hidden: sunk below the bottom of its slot. */
+.wordmark-model.is-sunk .model_3d canvas {
+  transform: translateY(110%);
+}
+
+/* The cameo over the hovered project card (positioned by avatar.js). It
+   lives inside the project grid and is placed above the hovered card, so
+   it scrolls with the card instead of staying glued to the screen. Its own
+   overflow hides the lower half of the model: only what cleared the card's
+   top edge shows, like the boo hiding behind the card. */
+.boo-peek {
+  position: absolute;
+  /* Above the cards, below the sticky header (z-index 3): the boo slides
+     under the header when the page is scrolled, not over it. */
+  z-index: 2;
+  width: 240px;
+  height: 190px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Cameo resting: fully hidden just below the card's top edge. */
+.boo-peek canvas {
+  transform: translateY(110%);
+}
+
+/* Cameo peeking: risen until its middle sits on the card's top edge, so
+   only the upper half of the model shows. */
+.boo-peek.is-up canvas {
+  transform: translateY(35%);
 }
 
 .site-nav {
@@ -286,6 +327,7 @@ h2 {
 }
 
 .project-grid {
+  position: relative; /* anchors the boo cameo, so it follows the cards */
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.15rem;
