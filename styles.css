@@ -120,7 +120,7 @@ a:focus-visible {
    so card-to-card browsing stays snappy. */
 .model_3d canvas,
 .boo-peek canvas {
-  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.3, 1.1);
+  transition: transform 210ms cubic-bezier(0.2, 0.8, 0.3, 1.1);
 }
 
 /* Header boo hidden: sunk below the bottom of its slot. */
@@ -349,6 +349,8 @@ h2 {
   overflow: hidden;
 }
 
+/* Hover lift on cards. Keep the 3px in sync with CARD_HOVER_LIFT in
+   avatar.js: the boo cameo clips at the settled hovered edge. */
 .project-card:hover {
   transform: translateY(-3px);
   border-color: var(--accent);

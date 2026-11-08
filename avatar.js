@@ -168,8 +168,16 @@ if (!reducedMotion) {
     projectGrid.appendChild(cameo);
     createBoo(cameo, { interactive: false });
 
+    // The card lifts this many pixels while hovered (see .project-card:hover
+    // in styles.css: keep the two values in sync).
+    const CARD_HOVER_LIFT = 3;
+    // Matches the CSS transition on the canvases: how long a sink (or rise)
+    // takes from start to visually finished.
+    const SINK_DURATION = 210;
+
     let hoveredCard = null;
     let switchTimer = null;
+    let sinkStartedAt = 0; // performance.now() of the last sink, 0 = resting
 
     function sinkHeader(sunk) {
       header.classList.toggle("is-sunk", sunk);
@@ -181,8 +189,24 @@ if (!reducedMotion) {
     function positionOver(card) {
       const gridRect = projectGrid.getBoundingClientRect();
       const rect = card.getBoundingClientRect();
+
+      // The hovered card is mid-lift while its hover transition plays, so
+      // the live top edge moves. Remove the lift already applied to get the
+      // resting top, then aim at the settled hovered edge: the boo is then
+      // clipped exactly at the card's edge at every instant and never drawn
+      // over the card.
+      const matrix = getComputedStyle(card).transform.match(/matrix\(([^)]+)\)/);
+      const currentLift = matrix ? parseFloat(matrix[1].split(",").pop()) : 0;
+      const settledHoveredTop = rect.top - currentLift - CARD_HOVER_LIFT;
+
       cameo.style.left = rect.left - gridRect.left + rect.width / 2 - cameo.offsetWidth / 2 + "px";
-      cameo.style.top = rect.top - gridRect.top - cameo.offsetHeight + "px";
+      cameo.style.top = settledHoveredTop - gridRect.top - cameo.offsetHeight + "px";
+    }
+
+    function riseOver(card) {
+      positionOver(card);
+      cameo.classList.add("is-up");
+      hoveredCard = card;
     }
 
     function peekAt(card) {
@@ -197,18 +221,25 @@ if (!reducedMotion) {
         // the full sink so browsing stays snappy: by the time the boo pops
         // back up, the model is visually gone from the first card.
         cameo.classList.remove("is-up");
+        sinkStartedAt = performance.now();
         hoveredCard = card;
         switchTimer = setTimeout(function () {
           switchTimer = null;
-          positionOver(card);
-          cameo.classList.add("is-up");
+          riseOver(card);
         }, 180);
-      } else {
-        // The boo is already down (first hover, or very quick browsing):
-        // rise straight over this card.
-        positionOver(card);
-        cameo.classList.add("is-up");
+      } else if (sinkStartedAt + SINK_DURATION > performance.now()) {
+        // The boo is down, but still mid-sink from a previous card (a fast
+        // diagonal move that clipped a card in between). Wait for the sink
+        // to finish, then rise over this card: the boo always goes fully
+        // down before going back up, and never teleports while half-visible.
         hoveredCard = card;
+        switchTimer = setTimeout(function () {
+          switchTimer = null;
+          riseOver(card);
+        }, sinkStartedAt + SINK_DURATION - performance.now());
+      } else {
+        // The boo is resting, fully hidden: rise straight over this card.
+        riseOver(card);
       }
     }
 
@@ -218,6 +249,7 @@ if (!reducedMotion) {
         switchTimer = null;
       }
       cameo.classList.remove("is-up");
+      sinkStartedAt = performance.now();
       hoveredCard = null;
     }
 
