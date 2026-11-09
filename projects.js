@@ -1,4 +1,8 @@
-// Add, edit, or remove projects in this list. Keep category as graphics, unreal, or unity.
+// Add, edit, or remove projects in this list.
+//
+//   categories: one or more categories for the project, e.g.
+//          categories: ["graphics", "unreal"]. The card shows a tag for each
+//          and appears under every matching filter button (index.html).
 //
 // Media fields (all optional):
 //   image: screenshot shown directly on the project card, e.g. "media/my-project.jpg"
@@ -22,8 +26,7 @@ window.portfolioProjects = [
   {
     title: "Visualizer",
     slug: "visualizer",
-    category: "graphics",
-    categoryLabel: "Graphics",
+    categories: ["graphics"],
     description: "A C++/Qt and OpenGL playground for experimenting with real-time rendering and interfaces.",
     tools: "C++ · Qt · OpenGL · GLSL",
     image: "media/visualizer/main.jpg",
@@ -33,16 +36,14 @@ window.portfolioProjects = [
       "That's how I came to create a 3D viewer that would work in a similar way to Maya. Having experimented with this tool in the past, I knew exactly the feeling I wanted to recreate: a simplified version of the viewport, allowing me to instantiate objects, move them around, add light sources and move freely in the scene.",
       "",
     ],
-    media: [],
+    media: ["heing?", "commentje?", "sasdf"],
     sample: true,
-    link: "",
-    linkLabel: ""
+    link: "https://github.com/axlmk/ogl-qt",
   },
   {
     title: "Frank",
     slug: "frank",
-    category: "unreal",
-    categoryLabel: "Unreal Engine",
+    categories: ["game-jam"],
     description: "A third-person environment prototype focused on atmosphere, responsive movement, and world-building.",
     tools: "Unreal Engine · C++",
     image: "media/frank/main.jpg",
@@ -57,35 +58,78 @@ window.portfolioProjects = [
     ],
     media: [],
     sample: true,
-    link: "github.com",
-    linkLabel: ""
+    link: "",
   },
   {
-    title: "Gameplay Systems Study",
-    slug: "gameplay-systems",
-    category: "unity",
-    categoryLabel: "Unity",
+    title: "Welcome A bored",
+    slug: "welcome-a-bored",
+    categories: ["game-jam"],
     description: "A small gameplay prototype exploring player controls, interaction, and a clear feedback loop.",
-    tools: "Unity · C#",
-    image: "",
+    tools: "Unity",
+    image: "media/welcome-a-bored/main.png",
     details: [],
     media: [],
     sample: true,
     link: "",
-    linkLabel: ""
   },
   {
-    title: "Procedural Scene Experiment",
-    slug: "procedural-scene",
-    category: "graphics",
-    categoryLabel: "Graphics",
+    title: "Marimba simulator",
+    slug: "marima",
+    categories: ["vr", "school"],
     description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
-    tools: "C++ · OpenGL · GLSL",
-    image: "",
+    tools: "Unity · C#",
+    image: "media/marimba-simulator/main.png",
     details: [],
     media: [],
     sample: true,
     link: "",
-    linkLabel: ""
+  },
+  {
+    title: "Pilot",
+    slug: "pilot",
+    categories: ["game-jam"],
+    description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
+    tools: "Lua · Love2D",
+    image: "media/pilot/main.png",
+    details: [],
+    media: [],
+    sample: true,
+    link: "https://github.com/PH0Q/GlobalGameJam-2021",
+  },
+  {
+    title: "Tamagotchi AR",
+    slug: "tamagotchi",
+    categories: ["ar", "school"],
+    description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
+    tools: "Unity · C# · Vuforia",
+    image: "media/tamagotchi/main.jpg",
+    details: [],
+    media: [],
+    sample: true,
+    link: "",
+  },
+  {
+    title: "WFA",
+    slug: "wfa",
+    categories: ["windows"],
+    description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
+    tools: "C++ · Win32",
+    image: "media/wfa/main.jpg",
+    details: [],
+    media: [],
+    sample: true,
+    link: "https://github.com/axlmk/WFA",
+  },
+  {
+    title: "Le dernier connard",
+    slug: "dernier-connard",
+    categories: ["game-jam"],
+    description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
+    tools: "Python · PyGame",
+    image: "media/le-dernier-connard/main.png",
+    details: [],
+    media: [],
+    sample: true,
+    link: "",
   }
 ];

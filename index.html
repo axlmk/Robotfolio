@@ -46,11 +46,13 @@
           </div>
         </div>
 
+        <!-- Filter buttons match the categories of projects.js. One button
+             can group several tags, comma-separated: data-filter="vr,ar". -->
         <div class="filters" role="group" aria-label="Filter projects">
           <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All work</button>
           <button class="filter-button" type="button" data-filter="graphics" aria-pressed="false">Graphics</button>
-          <button class="filter-button" type="button" data-filter="unreal" aria-pressed="false">Unreal</button>
-          <button class="filter-button" type="button" data-filter="unity" aria-pressed="false">Unity</button>
+          <button class="filter-button" type="button" data-filter="game-jam" aria-pressed="false">Game Jam</button>
+          <button class="filter-button" type="button" data-filter="vr,ar" aria-pressed="false">XR</button>
         </div>
 
         <div class="project-grid" id="project-grid" aria-live="polite"></div>

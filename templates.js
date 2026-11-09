@@ -23,6 +23,11 @@
     return /^https?:\/\//i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : "";
   }
 
+  // Reader-facing name of a category key: "graphics" becomes "Graphics".
+  function categoryName(category) {
+    return category.charAt(0).toUpperCase() + category.slice(1);
+  }
+
   // The short card shown in the project grid.
   function projectCard(project, index) {
     const hasDeepDive =
@@ -37,13 +42,17 @@
       : "";
 
     return (
-      '<article class="project-card" data-category="' + escapeHTML(project.category) + '">' +
+      '<article class="project-card" data-categories="' + escapeHTML((project.categories || []).join(" ")) + '">' +
         '<div class="project-cover' + (project.image ? " has-image" : "") + '">' +
           coverMedia +
           '<span class="cover-number" aria-hidden="true">' + String(index + 1).padStart(2, "0") + "</span>" +
         "</div>" +
         '<div class="project-info">' +
-          '<div class="project-meta"><span class="project-tag">' + escapeHTML(project.categoryLabel) + "</span></div>" +
+          '<div class="project-meta">' +
+          (project.categories || []).map(function (category) {
+            return '<span class="project-tag">' + escapeHTML(categoryName(category)).replace("-", " ") + "</span>";
+          }).join("") +
+          "</div>" +
           "<h3>" + escapeHTML(project.title) + "</h3>" +
           "<p>" + escapeHTML(project.description) + "</p>" +
           '<div class="project-bottom">' +
@@ -63,7 +72,7 @@
     const link = project.link
       ? '<span class="heading-line"></span>' +
         '<a class="project-link" href="' + escapeHTML(project.link) + '"' + externalAttributes(project.link) + ">" +
-        escapeHTML(project.linkLabel || "View project") + " ↗</a>"
+        'View project ↗</a>'
       : "";
 
     const gallery =

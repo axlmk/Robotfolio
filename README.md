@@ -10,8 +10,10 @@ publishing, so visitors get a finished page.
 1. Update the name, introduction, email address, LinkedIn URL, and GitHub URL in
    `index.html`.
 2. Replace the sample entries in `projects.js` with your own work. Each entry
-   accepts a title, category (`graphics`, `unreal`, or `unity`), category label,
-   short description, tools, and an optional project link.
+   accepts a title, a list of categories (one or more of `graphics`, `unreal`,
+   `unity`), short description, tools, and an optional project link. A card
+   shows a tag per category and appears under every filter it matches. A filter button can also group several tags
+   (comma-separated), like `data-filter="vr,ar"` for an XR button.
    Entries can also show a screenshot —
    see "Show screenshots and videos" below. Set `sample` to `true` for example
    content; omit it or set it to `false` for real projects. Copy an entry to

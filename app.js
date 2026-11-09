@@ -35,6 +35,9 @@
   filterButtons.forEach(function (button) {
     button.addEventListener("click", function () {
       const selectedFilter = button.dataset.filter;
+      // A button can group several tags, comma-separated, to show projects
+      // matching any of them: data-filter="vr,ar" groups VR and AR under XR.
+      const wantedTags = selectedFilter.split(",");
       let visibleCount = 0;
 
       filterButtons.forEach(function (filterButton) {
@@ -44,7 +47,11 @@
       });
 
       projectGrid.querySelectorAll(".project-card").forEach(function (card) {
-        const showsCard = selectedFilter === "all" || card.dataset.category === selectedFilter;
+        const showsCard =
+          selectedFilter === "all" ||
+          card.dataset.categories.split(" ").some(function (category) {
+            return wantedTags.indexOf(category) !== -1;
+          });
         card.hidden = !showsCard;
         if (showsCard) {
           visibleCount += 1;
