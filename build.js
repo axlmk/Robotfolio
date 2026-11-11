@@ -283,7 +283,7 @@ writeShipped("app.js", fs.readFileSync("app.js", "utf8"), minifyJS);
 writeShipped("avatar.js", fs.readFileSync("avatar.js", "utf8"), minifyJS);
 // The resume is a standalone document meant to be opened and read as is:
 // it ships uncompressed for readability.
-fs.copyFileSync("resume.html", "dist/resume.html");
+fs.copyFileSync("media/resume.pdf", "dist/media/resume.pdf");
 fs.cpSync("media", "dist/media", { recursive: true });
 
 console.log("Built dist/ with " + projects.length + " projects baked in.");
