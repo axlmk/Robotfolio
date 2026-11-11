@@ -68,7 +68,7 @@ window.portfolioProjects = [
       "When I integrated Frank into the engine, to make it feel more real, I added physics on its antenna. To do so, I created a collision box on Frank’s body, set up a rig and an attachment point on the antenna, and enable physics interactions on the rig.",
       { type: "video", src: "media/frank/2.webm", caption: "Frank and its moving antenna" },
       "On this project, I was also in charge of making generic breakable objects. By simply adding a base model and a destroyed version to a blueprint, the game system would take care of breaking it at a random moment, managing the player interaction required to fix it, and adding destruction effects. This proved very useful for quickly creating different types of broken objects.",
-      { type: "image", src: "media/frank/3.png", caption: "Actual blueprint of a breakable object" },
+      { type: "image", src: "media/frank/3.jpg", caption: "Actual blueprint of a breakable object" },
       "On a less technical note, I worked with the other team membvers on the level design of the first playable level."
     ],
     media: [],
@@ -82,10 +82,10 @@ window.portfolioProjects = [
     categories: ["game-jam"],
     description: "A narrative game about managing a submarine and making the right choices.",
     tools: "Unity",
-    image: "media/welcome-a-bored/main.png",
+    image: "media/welcome-a-bored/main.jpg",
     details: [
       "For the GDD Bear Jam, we came up with the idea to create a narrative-driven game in which the player makes various choices that impact different metrics, such as their hunger or the condition of the ship they are in. To encourage risky decisions, a “fun” metric is also present. This meter constantly decreases and can only be replenished through bold choices.",
-      { type: "image", src: "media/welcome-a-bored/1.png", caption: "Example of a panel displaying a choice to be made by the player" },
+      { type: "image", src: "media/welcome-a-bored/1.jpg", caption: "Example of a panel displaying a choice to be made by the player" },
       "We developed a kind of mini card-based choice engine in Unity. Based on a very specific file structure, the game was able to display a panel with its text and background image, choice cards along with their icons, and then transition from the current panel to the next one.",
       { type: "image", src: "media/welcome-a-bored/2.jpg", caption: "@lgwadart - Example of different panels discoverable by the player" },
       "My contribution to this project involved text display and its visual effects, part of the panel engine, as well as other visuals such as card selection feedback."
@@ -101,7 +101,7 @@ window.portfolioProjects = [
     categories: ["vr", "school"],
     description: "A virtual reality marimba serious game allowing the user to practice music inside the headset.",
     tools: "Unity · C#",
-    image: "media/marimba-simulator/main.png",
+    image: "media/marimba-simulator/main.jpg",
     details: [
       "To use the VR headset controllers intuitively, our team of three students decided to create a Marimba simulator. The idea was therefore to move toward a serious game approach",
       "Two practice modes were included: a free mode, in which the user can do whatever they want, and a guided mode. The later consists of selecting a piece of music beforehand and striking the illuminated keys of the instrument in order to reproduce the piece.",
@@ -122,14 +122,14 @@ window.portfolioProjects = [
     categories: ["game-jam"],
     description: "A 2021 Global Game's unfinished project, where a pilot explores a procedurally generated island to find their co-pilot before the clock runs out.",
     tools: "Lua · Love2D",
-    image: "media/pilot/main.png",
+    image: "media/pilot/main.jpg",
     details: [
       "For the 2021 Global Game Jam, we played as a pilot who had barely survived a plane crash on an island. The objective was to find our co-pilot within a limited amount of time.",
       { type: "image", src: "media/pilot/1.jpg", caption: "@ashrell - Various assets created for the game" },
       "The island was procedurally generated, which was meant to hinder the player's progress. However, the player had access to items that appeared in logical locations despite the randomness introduced by each run. Coming across one of these items granted knowledge that helped bypass certain random elements, eventually allowing the player to reach the co-pilot before the time limit expired.",
       { type: "image", src: "media/pilot/2.png", caption: "Screenshot of the game pitch created during the first hours of the event" },
       "I worked on several tasks (not always successfully), such as the random generation of the map and the random placement of entities on it. I had to overcome performance issues, as loading a large number of entities greatly slowed down the gameplay experience.",
-      { type: "image", src: "media/pilot/3.gif", caption: "Video from the game, showing some elements of the map and a truncated version of our character moving around" }
+      { type: "image", src: "media/pilot/3.webp", caption: "Video from the game, showing some elements of the map and a truncated version of our character moving around" }
     ],
     media: [],
     sample: true,
@@ -151,7 +151,7 @@ window.portfolioProjects = [
       "My role within the team was the creation of numerous systems: game saving, Blob positioning within its environment and adaptation to it, the customization screen, and the appearance of virtual objects following the detection of real-world images. The technical challenges were significant, as I had never worked with augmented reality before.",
       { type: "video", src: "media/tamagotchi/3.webm", caption: "Demonstration of a particle effect showing all of the Blob's love" },
       "We aimed to blend real and virtual elements as much as possible in order to offer an experience the user was not accustomed to. The Blob was able to move across most surfaces, real objects brought virtual objects to life, and virtual objects influencing the Blob's behavior while forcing it to act within real-world constraints.",
-      { type: "image", src: "media/tamagotchi/4.png", caption: "Screenshot of the mobile game, with the Blob unfortunately absent" }
+      { type: "image", src: "media/tamagotchi/4.jpg", caption: "Screenshot of the mobile game, with the Blob unfortunately absent" }
     ],
     media: [],
     sample: true,
@@ -167,7 +167,7 @@ window.portfolioProjects = [
     image: "media/wfa/main.jpg",
     details: [
       "A personal project inspired by a web extension, Wallpapers From ArtStation is a tool initially coded in PowerShell and later in C++ that automatically changes the wallpaper on a Windows system. Based on an API provided by the website referenced in the project's name, the goal is to retrieve an image via this API, install it on the system, and replace the previously assigned wallpaper. The tool adapts to the user's number of monitors and to differences in resolution between the image and the screen. If the image has a different aspect ratio than the selected screen, it is enlarged to fully fit the screen, then blurred, and the original image is overlaid on top for aesthetic purposes.",
-      { type: "image", src: "media/wfa/1.png", caption: "Example of a modified image, ready to be displayed" },
+      { type: "image", src: "media/wfa/1.jpg", caption: "Example of a modified image, ready to be displayed" },
       "As the project is still under development, I plan to add several features in the future, such as a small application in the Windows system tray that displays the artist responsible for the artwork currently shown, as well as a button to instantly switch to the next image. Although simple, this project was the first real personal project I set up that has a concrete use in my daily life. I would also like to turn it into an experimentation ground for image processing, allowing me to create my own functions to modify the source wallpaper and thus no longer rely on third-party libraries."
     ],
     media: [],
@@ -181,10 +181,10 @@ window.portfolioProjects = [
     categories: ["game-jam"],
     description: "A chaos-scoring game made from scratch in Python during my first game jam.",
     tools: "Python · PyGame",
-    image: "media/le-dernier-connard/main.png",
+    image: "media/le-dernier-connard/main.jpg",
     details: [
       "It was the first time I had tackled the “complete” creation of a game, as I had previously only made a few Minecraft mods by adapting tutorials found online. Everything was new: we found ourselves surrounded by strangers, working as a team outside the academic framework.",
-      { type: "image", src: "media/le-dernier-connard/1.png", caption: "Photo of the three other team members a few minutes after the theme announcement. I am the photographer." },
+      { type: "image", src: "media/le-dernier-connard/1.jpg", caption: "Photo of the three other team members a few minutes after the theme announcement. I am the photographer." },
       "The theme for this edition was: The Last. Immediately reminded of movies in which a hero tries to save the world from imminent destruction, we decided to take the opposite approach. Our idea was to create a game made up of several levels in which the goal is to survive as long as possible without being stopped by the police, while scoring as many points as possible. The way to score points was simple: cause as much chaos as possible. Knocking over trash cans, throwing toilet paper into trees, tripping grandmothers—any means were acceptable to become the game's eponymous character: The Last Asshole.",
       { type: "image", src: "media/le-dernier-connard/2.jpg", caption: "Assets in their intact and ruined versions." },
       "Having no knowledge of any game engine at the time, we made the most “rational” decision possible—starting from scratch. For that, we chose Python and its PyGame module to assist us with the visual side. Since collaboration was required, we also relied on Git, which we had only used once before, during a university course (needless to say, the commit messages were… questionable).",

@@ -18,9 +18,9 @@ publishing, so visitors get a finished page.
    see "Show screenshots and videos" below. Set `sample` to `true` for example
    content; omit it or set it to `false` for real projects. Copy an entry to
    add a project or delete one to remove it.
-3. Replace the sample experience and contact details in `resume.html`. The
-   portfolio includes a resume preview and a download link to this file.
-4. Update the sample resume preview in `index.html` to match `resume.html`.
+3. Replace the resume file in `media/resume.pdf`. The portfolio includes a
+   resume preview in `index.html` and a download link to this file.
+4. Update the sample resume preview in `index.html` to match the PDF.
 5. Replace the portfolio title and description in the `<head>` of `index.html`.
 
 The project cards intentionally identify themselves as samples until the example
@@ -101,8 +101,7 @@ already assembled:
   are also minified: comments, indentation, and needless spaces are removed,
   with string contents left untouched so nothing breaks. The sources in the
   repository keep all comments and formatting for comfortable editing; only
-  what visitors download is compact. `resume.html` ships as is, since it is
-  a standalone document meant to be read directly.
+  what visitors download is compact.
 
 The generated `dist/` folder is never committed; the source files stay exactly
 as you edit them. To check the published page locally, run `node build.js` and

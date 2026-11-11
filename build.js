@@ -273,16 +273,20 @@ if (!page.includes('id="project-dialog-0"') || !page.includes("project-card")) {
 }
 
 // 4. Assemble the site next to the media it references, minified.
+//    media/README.md is editing documentation: it stays in the repo only.
 fs.rmSync("dist", { recursive: true, force: true });
 fs.mkdirSync("dist");
+fs.cpSync("media", "dist/media", {
+  recursive: true,
+  filter: function (source) {
+    return !source.endsWith("README.md");
+  },
+});
 
 console.log("Minified files:");
 writeShipped("index.html", page, minifyHTML);
 writeShipped("styles.css", fs.readFileSync("styles.css", "utf8"), minifyCSS);
 writeShipped("app.js", fs.readFileSync("app.js", "utf8"), minifyJS);
 writeShipped("avatar.js", fs.readFileSync("avatar.js", "utf8"), minifyJS);
-// The resume is a standalone document meant to be opened and read as is:
-// it ships uncompressed for readability.
-fs.cpSync("media", "dist/media", { recursive: true });
 
 console.log("Built dist/ with " + projects.length + " projects baked in.");

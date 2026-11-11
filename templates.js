@@ -122,7 +122,7 @@
       (extraClass ? " " + extraClass : "");
 
     const media = item.type === "video"
-      ? '<video class="media-video" src="' + escapeHTML(item.src) + '" muted autoplay loop></video>'
+      ? '<video class="media-video" src="' + escapeHTML(item.src) + '" muted autoplay loop preload="metadata" playsinline></video>'
       : '<img class="media-image" src="' + escapeHTML(item.src) + '" alt="' + escapeHTML(item.caption || "Project screenshot") + '" loading="lazy">';
 
     const caption = item.caption
