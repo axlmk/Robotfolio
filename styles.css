@@ -960,6 +960,21 @@ body:has(.project-dialog[open]) {
     grid-template-columns: 1fr;
     gap: 0.55rem;
   }
+
+  /* Phones: keep a real margin around the deep dive instead of the tiny
+     3vw desktop value. dvh follows the browser's toolbars, so the dialog
+     never extends below the visible screen. */
+  .project-dialog {
+    max-height: calc(100vh - 3rem);
+    max-height: calc(100dvh - 3rem);
+  }
+
+  /* The Close button rejoins the flow above the title: an absolute
+     top-right position covers the "View project" link on narrow screens. */
+  .dialog-close {
+    position: static;
+    margin-bottom: 0.9rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
