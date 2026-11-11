@@ -45,7 +45,7 @@
       '<article class="project-card" data-categories="' + escapeHTML((project.categories || []).join(" ")) + '">' +
         '<div class="project-cover' + (project.image ? " has-image" : "") + '">' +
           coverMedia +
-          '<span class="cover-number" aria-hidden="true">' + String(index + 1).padStart(2, "0") + "</span>" +
+          '<span class="cover-date" aria-hidden="true">' + escapeHTML(project.date || "") + "</span>" +
         "</div>" +
         '<div class="project-info">' +
           '<div class="project-meta">' +

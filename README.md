@@ -11,7 +11,7 @@ publishing, so visitors get a finished page.
    `index.html`.
 2. Replace the sample entries in `projects.js` with your own work. Each entry
    accepts a title, a list of categories (one or more of `graphics`, `unreal`,
-   `unity`), short description, tools, and an optional project link. A card
+   `unity`), short description, tools, an optional project link, and a `date` shown in the card corner. A card
    shows a tag per category and appears under every filter it matches. A filter button can also group several tags
    (comma-separated), like `data-filter="vr,ar"` for an XR button.
    Entries can also show a screenshot —

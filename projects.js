@@ -7,6 +7,9 @@
 // Media fields (all optional):
 //   image: screenshot shown directly on the project card, e.g. "media/my-project.jpg"
 //          Use a 16:9 JPG around 1200 pixels wide, compressed (a few hundred KB max).
+//   date: free text shown in the corner of the card cover, e.g. date: "2021".
+//          Pick any format you like; it is displayed as is, and the corner
+//          stays empty while it is unset.
 //   slug: the project's name in the page address, e.g. slug: "frank" makes
 //          the deep dive open at example.com/#frank. Clicking its Read more
 //          button moves the address there too.
@@ -26,35 +29,47 @@ window.portfolioProjects = [
   {
     title: "Visualizer",
     slug: "visualizer",
+    date: "2025",
     categories: ["graphics"],
     description: "A C++/Qt and OpenGL playground for experimenting with real-time rendering and interfaces.",
     tools: "C++ · Qt · OpenGL · GLSL",
     image: "media/visualizer/main.jpg",
     details: [
-      "Having been interested in graphics programming for a long time, I eventually came across the learnopengl website, which motivated me to turn it into a project. The knowledge it gave me enabled me to display my first rectangles and cubes, and even write my first shaders. After making significant progress in the course, I decided it was time to deviate from the step-by-step guidance and create something more personal.",
+      "Having been interested in graphics programming for a long time, I eventually came across the learnopengl website, which motivated me to make my own renderer. That's how I came to create a 3D viewer that would work in a similar way to Maya software.",
+      "The code I developed to display 3D objects on screen follows standard practices that are coming directly from the learnopengl tutorial. That being said, I want to focus on a few things I implemented.",
       { type: "video", src: "media/visualizer/1.webm", caption: "A global overview of the current state of the project" },
-      "That's how I came to create a 3D viewer that would work in a similar way to Maya. Having experimented with this tool in the past, I knew exactly the feeling I wanted to recreate: a simplified version of the viewport, allowing me to instantiate objects, move them around, add light sources and move freely in the scene.",
-      "",
+      "The first one is the camera. It orbits around a target object with specific rules: no rotation along the axis connecting it to the target, restricted rotation along the X-axis and unlimited rotation along the Y-axis . It can also move laterally and zoom in and out.",
+      { type: "video", src: "media/visualizer/2.webm", caption: "Translation of an object. We can notice that the blue axis disappears depending on the camera's position" },
+      "Translating the objects directly within the virtual environment was made in four steps.",
+      "1. Object selection: using color picking, the scene renders but a special frame where all selectable objects have a uniform color shader depending on an ID is pre-rendered. Getting the color under the mouse when a click is made tells you which object is selected",
+      "2. Outline creation: to highlight the selected object, the OpenGL's stencil buffer is used as a mask. The selected object is displayed twice: initially in its original form and then with a red shader and scaled up",
+      "3. Gizmo positionning: a gizmo is centered at the selected object, which consists of three colored arrows representing the three axes in the scene.",
+      "4. Gizmo selection: select an axis and compute the required movement based on mouse displacement between frames.",
+      { type: "image", src: "media/visualizer/3.png", caption: "Display of a color picking ready frame where three objects have a unique and uniform color" },
+      "A detail panel allows the user to modify the properties of the selected object.",
+      { type: "image", src: "media/visualizer/4.png", caption: "The details panel for a spot light" },
+      "I wanted the project to be buildable simply and on multiple platforms, that’s why, in the middle of the development I switched from using a .vcxproj file to having a full CMakefile, handling dependencies and build stages. A Github Actions CI is in charge to build the application on every merge request across multiple configurations."
     ],
-    media: ["heing?", "commentje?", "sasdf"],
+    media: [],
     sample: true,
     link: "https://github.com/axlmk/ogl-qt",
   },
   {
     title: "Frank",
     slug: "frank",
+    date: "2024",
     categories: ["game-jam"],
     description: "A third-person environment prototype focused on atmosphere, responsive movement, and world-building.",
-    tools: "Unreal Engine · C++",
+    tools: "Unreal Engine · Blueprints",
     image: "media/frank/main.jpg",
     details: [
-      "New year, new game created in 48 hours—this time without tying ourselves to an existing game jam. On top of that, we wanted to aim higher by creating a fully 3D game using Unreal Engine. Since I was the only one with some basic 3D modeling skills (which clearly did not cover the project’s needs), we chose to rely on kitbashing to build the universe in which our robot Frank would evolve. Frank’s goal is to keep a crumbling spaceship operational. To do so, he must find all the parts of a level that are breaking down and repair them within a limited time.",
+      "Frank is a 48h game jam project done by a team of 4 including myself. It takes place in a 3D world in which you are a robot in charge of repairing a crumbling spaceship. Made using Unreal Engine, we relied on kitbashing for the enrvironnement and on a custom asset I created for Frank",
       { type: "video", src: "media/frank/1.webm", caption: "Beginning of level 1" },
-      "With this game project, I wanted to have a foot in both worlds—that is, to collaborate both as a developer and as an artist. Based on a 2D illustration provided by one of the team’s artists, I did my best to model Frank and create his textures. I also worked on integrating him into the game, handling his movement and his antenna. The antenna is special because, unlike the rest of his body, it is affected by the game engine’s physics. To achieve this, I had to create a collision box on Frank’s body, set up a rig and an attachment point on the antenna, and enable physics interactions on that rig.",
+      "When I integrated Frank into the engine, to make it feel more real, I added physics on its antenna. To do so, I created a collision box on Frank’s body, set up a rig and an attachment point on the antenna, and enable physics interactions on the rig.",
       { type: "video", src: "media/frank/2.webm", caption: "Frank and its moving antenna" },
-      "AI also created a reusable blueprint for breakable objects. By simply adding the original model and its destroyed version to the blueprint, the game system takes care of breaking it at a random moment, managing the player interaction required to fix it, and adding destruction effects. This proved very useful for quickly creating different types of broken objects.",
+      "On this project, I was also in charge of making generic breakable objects. By simply adding a base model and a destroyed version to a blueprint, the game system would take care of breaking it at a random moment, managing the player interaction required to fix it, and adding destruction effects. This proved very useful for quickly creating different types of broken objects.",
       { type: "image", src: "media/frank/3.png", caption: "Actual blueprint of a breakable object" },
-      "Finally, on a less technical note, I worked with others on the level design of the first playable level. This was great because it allowed us to think about how to create a fun and challenging experience, while also showcasing the elements I had created. For example, by adding a kitchen to the spaceship, I was able to reuse the breakable object blueprint mentioned earlier, test it with ventilation pipes instead of an electrical panel, and see it working live."
+      "On a less technical note, I worked with the other team membvers on the level design of the first playable level."
     ],
     media: [],
     sample: true,
@@ -63,6 +78,7 @@ window.portfolioProjects = [
   {
     title: "Welcome A bored",
     slug: "welcome-a-bored",
+    date: "",
     categories: ["game-jam"],
     description: "A small gameplay prototype exploring player controls, interaction, and a clear feedback loop.",
     tools: "Unity",
@@ -75,6 +91,7 @@ window.portfolioProjects = [
   {
     title: "Marimba simulator",
     slug: "marima",
+    date: "",
     categories: ["vr", "school"],
     description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
     tools: "Unity · C#",
@@ -87,6 +104,7 @@ window.portfolioProjects = [
   {
     title: "Pilot",
     slug: "pilot",
+    date: "2021",
     categories: ["game-jam"],
     description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
     tools: "Lua · Love2D",
@@ -99,6 +117,7 @@ window.portfolioProjects = [
   {
     title: "Tamagotchi AR",
     slug: "tamagotchi",
+    date: "",
     categories: ["ar", "school"],
     description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
     tools: "Unity · C# · Vuforia",
@@ -111,6 +130,7 @@ window.portfolioProjects = [
   {
     title: "WFA",
     slug: "wfa",
+    date: "",
     categories: ["windows"],
     description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
     tools: "C++ · Win32",
@@ -123,6 +143,7 @@ window.portfolioProjects = [
   {
     title: "Le dernier connard",
     slug: "dernier-connard",
+    date: "",
     categories: ["game-jam"],
     description: "A compact rendering experiment exploring procedural geometry and visual effects in a real-time scene.",
     tools: "Python · PyGame",
