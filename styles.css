@@ -159,7 +159,7 @@ a:focus-visible {
   display: flex;
   gap: clamp(1.2rem, 3vw, 2.5rem);
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 
 .site-nav a {
@@ -927,10 +927,6 @@ body:has(.project-dialog[open]) {
   .media-image,
   .media-video {
     max-width: 100%;
-  }
-
-  .site-nav a {
-    font-size: 0.7rem;
   }
 
   .project-grid {
