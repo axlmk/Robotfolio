@@ -31,8 +31,7 @@
   // The short card shown in the project grid.
   function projectCard(project, index) {
     const hasDeepDive =
-      (project.details && project.details.length > 0) ||
-      (project.media && project.media.length > 0);
+      project.details && project.details.length > 0;
 
     const coverMedia = project.image
       ? '<img class="cover-image" src="' + escapeHTML(project.image) + '" alt="Screenshot: ' + escapeHTML(project.title) + '" loading="lazy">'
@@ -75,15 +74,6 @@
         'View project ↗</a>'
       : "";
 
-    const gallery =
-      project.media && project.media.length > 0
-        ? '<div class="media-gallery">' +
-          project.media.map(function (item) {
-            return mediaFigure(item, "");
-          }).join("") +
-          "</div>"
-        : "";
-
     return (
       '<dialog class="project-dialog" id="' + id + '"' +
         (project.slug ? ' data-slug="' + escapeHTML(project.slug) + '"' : '') +
@@ -96,7 +86,6 @@
           "</div>" +
           '<p class="dialog-tools">' + escapeHTML(project.tools) + "</p>" +
           detailsHTML(project.details) +
-          gallery +
         "</div>" +
       "</dialog>"
     );
@@ -114,7 +103,7 @@
   }
 
   // One screenshot or clip, with its caption. extraClass lets the same figure
-  // sit between paragraphs (media-item-between) or in the gallery grid.
+  // sit between paragraphs (media-item-between).
   function mediaFigure(item, extraClass) {
     const classes =
       "media-item" +

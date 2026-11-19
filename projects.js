@@ -1,30 +1,3 @@
-// Add, edit, or remove projects in this list.
-//
-//   categories: one or more categories for the project, e.g.
-//          categories: ["graphics", "unreal"]. The card shows a tag for each
-//          and appears under every matching filter button (index.html).
-//
-// Media fields (all optional):
-//   image: screenshot shown directly on the project card, e.g. "media/my-project.jpg"
-//          Use a 16:9 JPG around 1200 pixels wide, compressed (a few hundred KB max).
-//   date: free text shown in the corner of the card cover, e.g. date: "2021".
-//          Pick any format you like; it is displayed as is, and the corner
-//          stays empty while it is unset.
-//   slug: the project's name in the page address, e.g. slug: "frank" makes
-//          the deep dive open at example.com/#frank. Clicking its Read more
-//          button moves the address there too.
-//
-// Optional deep dive (extra text + more pictures and videos), shown in a pop-over
-// when the reader clicks "Read more" on the card:
-//   details: the content of the deep dive, in order. Each entry is either:
-//     - a string, shown as a paragraph, or
-//     - a media object, shown in place so pictures and clips sit between
-//       the paragraphs:
-//       { type: "image", src: "media/extra-1.jpg", caption: "Text under the picture" }
-//       { type: "video", src: "media/clip-1.mp4", poster: "media/extra-1.jpg", caption: "Text under the clip" }
-//   media: more screenshots and clips shown as a gallery after the text,
-//     same objects as above, one per item.
-//   Leave details and media as empty lists ([]) for a simple card with no "Read more".
 window.portfolioProjects = [
   {
     title: "Visualizer",
@@ -50,7 +23,6 @@ window.portfolioProjects = [
       { type: "image", src: "media/visualizer/4.png", caption: "The details panel for a spot light" },
       "I wanted the project to be buildable simply and on multiple platforms, that’s why, in the middle of the development I switched from using a .vcxproj file to having a full CMakefile, handling dependencies and build stages. A Github Actions CI is in charge to build the application on every merge request across multiple configurations."
     ],
-    media: [],
     sample: true,
     link: "https://github.com/axlmk/ogl-qt",
   },
@@ -71,7 +43,6 @@ window.portfolioProjects = [
       { type: "image", src: "media/frank/3.jpg", caption: "Actual blueprint of a breakable object" },
       "On a less technical note, I worked with the other team membvers on the level design of the first playable level."
     ],
-    media: [],
     sample: true,
     link: "",
   },
@@ -90,7 +61,6 @@ window.portfolioProjects = [
       { type: "image", src: "media/welcome-a-bored/2.jpg", caption: "@lgwadart - Example of different panels discoverable by the player" },
       "My contribution to this project involved text display and its visual effects, part of the panel engine, as well as other visuals such as card selection feedback."
     ],
-    media: [],
     sample: true,
     link: "https://a3lfyr.itch.io/welcome-a-bored",
   },
@@ -111,7 +81,6 @@ window.portfolioProjects = [
       "I also worked on the mallets, their collisions with the instrument, and their interactions with the user's virtual hands.",
       { type: "video", src: "media/marimba-simulator/3.webm", caption: "Video of the interaction between the user and the marimba" }
     ],
-    media: [],
     sample: true,
     link: "",
   },
@@ -131,7 +100,6 @@ window.portfolioProjects = [
       "I worked on several tasks (not always successfully), such as the random generation of the map and the random placement of entities on it. I had to overcome performance issues, as loading a large number of entities greatly slowed down the gameplay experience.",
       { type: "image", src: "media/pilot/3.webp", caption: "Video from the game, showing some elements of the map and a truncated version of our character moving around" }
     ],
-    media: [],
     sample: true,
     link: "https://github.com/PH0Q/GlobalGameJam-2021",
   },
@@ -153,7 +121,6 @@ window.portfolioProjects = [
       "We aimed to blend real and virtual elements as much as possible in order to offer an experience the user was not accustomed to. The Blob was able to move across most surfaces, real objects brought virtual objects to life, and virtual objects influencing the Blob's behavior while forcing it to act within real-world constraints.",
       { type: "image", src: "media/tamagotchi/4.jpg", caption: "Screenshot of the mobile game, with the Blob unfortunately absent" }
     ],
-    media: [],
     sample: true,
     link: "",
   },
@@ -170,7 +137,6 @@ window.portfolioProjects = [
       { type: "image", src: "media/wfa/1.jpg", caption: "Example of a modified image, ready to be displayed" },
       "As the project is still under development, I plan to add several features in the future, such as a small application in the Windows system tray that displays the artist responsible for the artwork currently shown, as well as a button to instantly switch to the next image. Although simple, this project was the first real personal project I set up that has a concrete use in my daily life. I would also like to turn it into an experimentation ground for image processing, allowing me to create my own functions to modify the source wallpaper and thus no longer rely on third-party libraries."
     ],
-    media: [],
     sample: true,
     link: "https://github.com/axlmk/WFA",
   },
@@ -192,7 +158,6 @@ window.portfolioProjects = [
       "I was responsible for several aspects, including displaying the menu, managing the character's movement, preventing them from entering buildings, and defining the paths the police would follow to catch us. Without realizing it, through these tasks I was tackling major areas of virtual world creation, such as graphical programming, collision management, and pathfinding for artificial entities. Without relying on any pre-existing work or resources, I imagined what a collision detection algorithm or a pathfinding algorithm might look like. To this algorithmic challenge were added technical constraints: I had to learn Python and PyGame, which implied reading documentation to understand which functions to use and what results they would produce. Add to that a lack of understanding of how Git merges work and an extremely reduced number of hours of sleep, and you get a highly challenging experience.",
       { type: "video", src: "media/le-dernier-connard/4.webm" }
     ],
-    media: [],
     sample: true,
     link: "",
   }
